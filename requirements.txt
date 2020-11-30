@@ -2,6 +2,7 @@ streamlit
 altair
 altair_viewer
 pandas
+xlrd
 numpy
 scipy
 statsmodels
