@@ -1,7 +1,10 @@
 streamlit
 altair
-os
+altair_viewer
 pandas
 numpy
+scipy
+statsmodels
 matplotlib
 vega
+vega_datasets
