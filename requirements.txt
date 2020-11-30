@@ -1,0 +1,13 @@
+streamlit
+altair
+altair_viewer
+os
+pandas
+numpy
+seaborn
+sklearn
+matplotlib.pyplot
+scipy
+statsmodels
+vega
+vega_datasets
