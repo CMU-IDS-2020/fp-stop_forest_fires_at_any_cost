@@ -1,8 +1,8 @@
 import altair as alt
 import pandas as pd
 import streamlit as st
-import altair_viewer
-from vega_datasets import data
+#import altair_viewer
+#from vega_datasets import data
 import os
 import vega
 import matplotlib.pyplot as plt
