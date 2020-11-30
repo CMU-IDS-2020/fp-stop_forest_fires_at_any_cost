@@ -6,7 +6,7 @@ library(forecast)
 #Load Data Set
 dataset = read.csv('significant-fires.csv', stringsAsFactors = FALSE)
 dataset$Start_Date = as.Date(dataset$Start_Date, format='%m/%d/%Y')
-dataset$year = dataset$ï..Year
+dataset$year = dataset$Ã¯..Year
 dataset$year <- as.numeric(dataset$year)
 dataset$Acres <-as.numeric(gsub(",", "", dataset$Acres))
 
@@ -21,7 +21,7 @@ texas_ets_fc <- forecast(texas_ets_auto, h=5)
 texas_ets_fc_df <- cbind("Year" = rownames(as.data.frame(texas_ets_fc)), as.data.frame(texas_ets_fc))
 names(texas_ets_fc_df) <- gsub(" ", "_", names(texas_ets_fc_df))  
 texas_ets_fc_df$Date <- as.Date(paste("", texas_ets_fc_df$Year, sep = ""), format = "%Y")
-texas_ets_fc_df$Model <- rep("ets")
+texas_ets_fc_df$Model <- rep("texas")
 
 texas_ets_fc_df %>% 
   filter(Year == "2020") %>% 
@@ -38,7 +38,7 @@ alaska_ets_fc <- forecast(alaska_ets_auto, h=5)
 alaska_ets_fc_df <- cbind("Year" = rownames(as.data.frame(alaska_ets_fc)), as.data.frame(alaska_ets_fc))
 names(alaska_ets_fc_df) <- gsub(" ", "_", names(alaska_ets_fc_df))  
 alaska_ets_fc_df$Date <- as.Date(paste("", alaska_ets_fc_df$Year, sep = ""), format = "%Y")
-alaska_ets_fc_df$Model <- rep("ets")
+alaska_ets_fc_df$Model <- rep("alaska")
 
 alaska_ets_fc_df %>% filter(Year == "2020") %>% select(Year, "Point_Forecast")
 
@@ -53,7 +53,7 @@ arizona_ets_fc <- forecast(arizona_ets_auto, h=5)
 arizona_ets_fc_df <- cbind("Year" = rownames(as.data.frame(arizona_ets_fc)), as.data.frame(arizona_ets_fc))
 names(arizona_ets_fc_df) <- gsub(" ", "_", names(arizona_ets_fc_df))  
 arizona_ets_fc_df$Date <- as.Date(paste("", arizona_ets_fc_df$Year, sep = ""), format = "%Y")
-arizona_ets_fc_df$Model <- rep("ets")
+arizona_ets_fc_df$Model <- rep("arizona")
 
 arizona_ets_fc_df %>% filter(Year == "2021") %>% select(Year, "Point_Forecast")
 
@@ -68,7 +68,7 @@ california_ets_fc <- forecast(california_ets_auto, h=5)
 california_ets_fc_df <- cbind("Year" = rownames(as.data.frame(california_ets_fc)), as.data.frame(california_ets_fc))
 names(california_ets_fc_df) <- gsub(" ", "_", names(california_ets_fc_df))  
 california_ets_fc_df$Date <- as.Date(paste("", california_ets_fc_df$Year, sep = ""), format = "%Y")
-california_ets_fc_df$Model <- rep("ets")
+california_ets_fc_df$Model <- rep("california")
 
 california_ets_fc_df %>% filter(Year == "2021") %>% select(Year, "Point_Forecast")
 
@@ -83,7 +83,7 @@ colorado_ets_fc <- forecast(colorado_ets_auto, h=5)
 colorado_ets_fc_df <- cbind("Year" = rownames(as.data.frame(colorado_ets_fc)), as.data.frame(colorado_ets_fc))
 names(colorado_ets_fc_df) <- gsub(" ", "_", names(colorado_ets_fc_df))  
 colorado_ets_fc_df$Date <- as.Date(paste("", colorado_ets_fc_df$Year, sep = ""), format = "%Y")
-colorado_ets_fc_df$Model <- rep("ets")
+colorado_ets_fc_df$Model <- rep("colorado")
 
 colorado_ets_fc_df %>% filter(Year == "2021") %>% select(Year, "Point_Forecast")
 
@@ -98,7 +98,7 @@ florida_ets_fc <- forecast(florida_ets_auto, h=5)
 florida_ets_fc_df <- cbind("Year" = rownames(as.data.frame(florida_ets_fc)), as.data.frame(florida_ets_fc))
 names(florida_ets_fc_df) <- gsub(" ", "_", names(florida_ets_fc_df))  
 florida_ets_fc_df$Date <- as.Date(paste("", florida_ets_fc_df$Year, sep = ""), format = "%Y")
-florida_ets_fc_df$Model <- rep("ets")
+florida_ets_fc_df$Model <- rep("florida")
 
 florida_ets_fc_df %>% filter(Year == "2021") %>% select(Year, "Point_Forecast")
 
@@ -113,7 +113,7 @@ georgia_ets_fc <- forecast(georgia_ets_auto, h=5)
 georgia_ets_fc_df <- cbind("Year" = rownames(as.data.frame(georgia_ets_fc)), as.data.frame(georgia_ets_fc))
 names(georgia_ets_fc_df) <- gsub(" ", "_", names(georgia_ets_fc_df))  
 georgia_ets_fc_df$Date <- as.Date(paste("", georgia_ets_fc_df$Year, sep = ""), format = "%Y")
-georgia_ets_fc_df$Model <- rep("ets")
+georgia_ets_fc_df$Model <- rep("georgia")
 
 georgia_ets_fc_df %>% filter(Year == "2021") %>% select(Year, "Point_Forecast")
 
@@ -128,7 +128,7 @@ idaho_ets_fc <- forecast(idaho_ets_auto, h=5)
 idaho_ets_fc_df <- cbind("Year" = rownames(as.data.frame(idaho_ets_fc)), as.data.frame(idaho_ets_fc))
 names(idaho_ets_fc_df) <- gsub(" ", "_", names(idaho_ets_fc_df))  
 idaho_ets_fc_df$Date <- as.Date(paste("", idaho_ets_fc_df$Year, sep = ""), format = "%Y")
-idaho_ets_fc_df$Model <- rep("ets")
+idaho_ets_fc_df$Model <- rep("idaho")
 
 idaho_ets_fc_df %>% filter(Year == "2021") %>% select(Year, "Point_Forecast")
 
@@ -143,7 +143,7 @@ montana_ets_fc <- forecast(montana_ets_auto, h=5)
 montana_ets_fc_df <- cbind("Year" = rownames(as.data.frame(montana_ets_fc)), as.data.frame(montana_ets_fc))
 names(montana_ets_fc_df) <- gsub(" ", "_", names(montana_ets_fc_df))  
 montana_ets_fc_df$Date <- as.Date(paste("", montana_ets_fc_df$Year, sep = ""), format = "%Y")
-montana_ets_fc_df$Model <- rep("ets")
+montana_ets_fc_df$Model <- rep("montana")
 
 montana_ets_fc_df %>% filter(Year == "2021") %>% select(Year, "Point_Forecast")
 
@@ -158,7 +158,7 @@ nevada_ets_fc <- forecast(nevada_ets_auto, h=5)
 nevada_ets_fc_df <- cbind("Year" = rownames(as.data.frame(nevada_ets_fc)), as.data.frame(nevada_ets_fc))
 names(nevada_ets_fc_df) <- gsub(" ", "_", names(nevada_ets_fc_df))  
 nevada_ets_fc_df$Date <- as.Date(paste("", nevada_ets_fc_df$Year, sep = ""), format = "%Y")
-nevada_ets_fc_df$Model <- rep("ets")
+nevada_ets_fc_df$Model <- rep("nevada")
 
 nevada_ets_fc_df %>% filter(Year == "2021") %>% select(Year, "Point_Forecast")
 
@@ -173,7 +173,7 @@ newmexico_ets_fc <- forecast(newmexico_ets_auto, h=5)
 newmexico_ets_fc_df <- cbind("Year" = rownames(as.data.frame(newmexico_ets_fc)), as.data.frame(newmexico_ets_fc))
 names(newmexico_ets_fc_df) <- gsub(" ", "_", names(newmexico_ets_fc_df))  
 newmexico_ets_fc_df$Date <- as.Date(paste("", newmexico_ets_fc_df$Year, sep = ""), format = "%Y")
-newmexico_ets_fc_df$Model <- rep("ets")
+newmexico_ets_fc_df$Model <- rep("newmexico")
 
 newmexico_ets_fc_df %>% filter(Year == "2021") %>% select(Year, "Point_Forecast")
 
@@ -188,7 +188,7 @@ oklahoma_ets_fc <- forecast(oklahoma_ets_auto, h=5)
 oklahoma_ets_fc_df <- cbind("Year" = rownames(as.data.frame(oklahoma_ets_fc)), as.data.frame(oklahoma_ets_fc))
 names(oklahoma_ets_fc_df) <- gsub(" ", "_", names(oklahoma_ets_fc_df))  
 oklahoma_ets_fc_df$Date <- as.Date(paste("", oklahoma_ets_fc_df$Year, sep = ""), format = "%Y")
-oklahoma_ets_fc_df$Model <- rep("ets")
+oklahoma_ets_fc_df$Model <- rep("oklahoma")
 
 oklahoma_ets_fc_df %>% filter(Year == "2021") %>% select(Year, "Point_Forecast")
 
@@ -203,7 +203,7 @@ oregon_ets_fc <- forecast(oregon_ets_auto, h=5)
 oregon_ets_fc_df <- cbind("Year" = rownames(as.data.frame(oregon_ets_fc)), as.data.frame(oregon_ets_fc))
 names(oregon_ets_fc_df) <- gsub(" ", "_", names(oregon_ets_fc_df))  
 oregon_ets_fc_df$Date <- as.Date(paste("", oregon_ets_fc_df$Year, sep = ""), format = "%Y")
-oregon_ets_fc_df$Model <- rep("ets")
+oregon_ets_fc_df$Model <- rep("oregon")
 
 oregon_ets_fc_df %>% filter(Year == "2021") %>% select(Year, "Point_Forecast")
 
@@ -218,7 +218,7 @@ southdakota_ets_fc <- forecast(southdakota_ets_auto, h=5)
 southdakota_ets_fc_df <- cbind("Year" = rownames(as.data.frame(southdakota_ets_fc)), as.data.frame(southdakota_ets_fc))
 names(southdakota_ets_fc_df) <- gsub(" ", "_", names(southdakota_ets_fc_df))  
 southdakota_ets_fc_df$Date <- as.Date(paste("", southdakota_ets_fc_df$Year, sep = ""), format = "%Y")
-southdakota_ets_fc_df$Model <- rep("ets")
+southdakota_ets_fc_df$Model <- rep("southdakota")
 
 southdakota_ets_fc_df %>% filter(Year == "2021") %>% select(Year, "Point_Forecast")
 
@@ -233,7 +233,7 @@ utah_ets_fc <- forecast(utah_ets_auto, h=5)
 utah_ets_fc_df <- cbind("Year" = rownames(as.data.frame(utah_ets_fc)), as.data.frame(utah_ets_fc))
 names(utah_ets_fc_df) <- gsub(" ", "_", names(utah_ets_fc_df))  
 utah_ets_fc_df$Date <- as.Date(paste("", utah_ets_fc_df$Year, sep = ""), format = "%Y")
-utah_ets_fc_df$Model <- rep("ets")
+utah_ets_fc_df$Model <- rep("utah")
 
 utah_ets_fc_df %>% filter(Year == "2021") %>% select(Year, "Point_Forecast")
 
@@ -248,7 +248,7 @@ washington_ets_fc <- forecast(washington_ets_auto, h=5)
 washington_ets_fc_df <- cbind("Year" = rownames(as.data.frame(washington_ets_fc)), as.data.frame(washington_ets_fc))
 names(washington_ets_fc_df) <- gsub(" ", "_", names(washington_ets_fc_df))  
 washington_ets_fc_df$Date <- as.Date(paste("", washington_ets_fc_df$Year, sep = ""), format = "%Y")
-washington_ets_fc_df$Model <- rep("ets")
+washington_ets_fc_df$Model <- rep("washington")
 
 washington_ets_fc_df %>% filter(Year == "2021") %>% select(Year, "Point_Forecast")
 
@@ -263,6 +263,26 @@ wyoming_ets_fc <- forecast(wyoming_ets_auto, h=5)
 wyoming_ets_fc_df <- cbind("Year" = rownames(as.data.frame(wyoming_ets_fc)), as.data.frame(wyoming_ets_fc))
 names(wyoming_ets_fc_df) <- gsub(" ", "_", names(wyoming_ets_fc_df))  
 wyoming_ets_fc_df$Date <- as.Date(paste("", wyoming_ets_fc_df$Year, sep = ""), format = "%Y")
-wyoming_ets_fc_df$Model <- rep("ets")
+wyoming_ets_fc_df$Model <- rep("wyoming")
 
 wyoming_ets_fc_df %>% filter(Year == "2021") %>% select(Year, "Point_Forecast")
+
+#merge the data
+merged_dataset <- do.call("rbind", list(wyoming_ets_fc_df, 
+                                        washington_ets_fc_df, 
+                                        utah_ets_fc_df, 
+                                        texas_ets_fc_df, 
+                                        southdakota_ets_fc_df, 
+                                        oregon_ets_fc_df, 
+                                        oklahoma_ets_fc_df, 
+                                        newmexico_ets_fc_df, 
+                                        nevada_ets_fc_df, 
+                                        montana_ets_fc_df, 
+                                        idaho_ets_fc_df, 
+                                        georgia_ets_fc_df, 
+                                        florida_ets_fc_df, 
+                                        colorado_ets_fc_df, 
+                                        california_ets_fc_df, 
+                                        arizona_ets_fc_df, 
+                                        alaska_ets_fc_df))
+write.csv(merged_dataset, 'merged_prediction_results.csv')
