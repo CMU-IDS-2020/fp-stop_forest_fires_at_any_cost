@@ -1,13 +1,7 @@
 streamlit
 altair
-altair_viewer
 os
 pandas
 numpy
-seaborn
-sklearn
-matplotlib.pyplot
-scipy
-statsmodels
+matplotlib
 vega
-vega_datasets
