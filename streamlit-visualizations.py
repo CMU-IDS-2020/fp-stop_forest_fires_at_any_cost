@@ -7,6 +7,13 @@ import os
 import vega
 import matplotlib.pyplot as plt
 
+###Brief Summary####
+####Video timelapse#####
+
+###Brief summary/instructions on how to interact
+###Couple of illustrations for each excel page from the dataset####
+
+
 
 df = pd.read_excel('Data.xlsx')
 df1 = pd.read_excel('Data.xlsx',3)
