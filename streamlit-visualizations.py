@@ -46,8 +46,8 @@ slider2 = st.slider('Select the year range',2005, 2019, (2005, 2019))
 # 2019 -> The higher bound
 # (2015, 2019) -> Default selected range
 
-slider = alt.binding_range(min=2005, max=2019, step=1)
-select_year = alt.selection_single(name="Year", fields=['Year'],bind=slider, init={'Year': 2019})
+#slider = alt.binding_range(min=2005, max=2019, step=1)
+#select_year = alt.selection_single(name="Year", fields=['Year'],bind=slider2, init={'Year': 2019})
 
 
 states = alt.topo_feature(data.us_10m.url, feature='states')
@@ -70,11 +70,11 @@ points = alt.Chart(df1).mark_circle(
     longitude='Long:Q',
     latitude='Lat:Q',
     tooltip=['Name', 'Year', 'Size (acres)','Estimated Cost','Cause*']
-).add_selection(
-    select_year
-).transform_filter(
-    select_year
-)
+)#.add_selection(
+  #  select_year
+#).transform_filter(
+ #   select_year
+#)
 
 
 
