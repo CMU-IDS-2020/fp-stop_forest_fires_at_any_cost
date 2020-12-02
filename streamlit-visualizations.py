@@ -40,7 +40,7 @@ brush = alt.selection(type='interval', encodings=['x'])
 #######################################
 ####UNITED STATES MAP WITH OVERLAY#####
 #######################################
-#slider = st.slider('Select the year range',2015, 2019, (2015, 2019))
+slider2 = st.slider('Select the year range',2005, 2019, (2005, 2019))
 # 'Select the year range' -> Text to display
 # 2015 -> The lower bound
 # 2019 -> The higher bound
