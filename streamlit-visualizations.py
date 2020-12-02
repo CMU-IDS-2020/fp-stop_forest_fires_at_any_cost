@@ -21,7 +21,7 @@ def display_date_slider(df):
 
 ####Title####
 def display_title_and_info():
-    st.title("Stop Forest Fires at any COST \U+1F525")
+    st.title("Stop Forest Fires at any COST")
    
 
 
