@@ -10,6 +10,10 @@ import matplotlib.pyplot as plt
 df = pd.read_excel('Data.xlsx')
 df1 = pd.read_excel('Data.xlsx',3)
 
+####Title####
+def display_title_and_info():
+    st.title("Stop Forest Fires at any COST")
+   
 ####BRUSH####
 brush = alt.selection(type='interval', encodings=['x'])
 
@@ -18,12 +22,6 @@ def display_date_slider(df):
     min_date = min(df["Year"]).to_pydatetime()
     max_date = max(df["Year"]).to_pydatetime()
     return st.slider("Select Date Range", min_date, max_date, (min_date, max_date))
-
-####Title####
-def display_title_and_info():
-    st.title("Stop Forest Fires at any COST")
-   
-
 
 
 ####SECTION NUMBER 1
