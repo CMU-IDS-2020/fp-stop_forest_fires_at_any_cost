@@ -10,9 +10,21 @@ import matplotlib.pyplot as plt
 df = pd.read_excel('Data.xlsx')
 df1 = pd.read_excel('Data.xlsx',3)
 
+####BRUSH####
 brush = alt.selection(type='interval', encodings=['x'])
 
-###Title####
+####Date Slider####
+def display_date_slider(df):
+    min_date = min(df["Year"]).to_pydatetime()
+    max_date = max(df["Year"]).to_pydatetime()
+    return st.slider("Select Date Range", min_date, max_date, (min_date, max_date))
+
+####Title####
+def display_title_and_info():
+    st.title("Stop Forest Fires at any COST \U+1F525")
+   
+
+
 
 ####SECTION NUMBER 1
 ###Brief Summary####
@@ -41,16 +53,9 @@ brush = alt.selection(type='interval', encodings=['x'])
 ####UNITED STATES MAP WITH OVERLAY#####
 #######################################
 slider2 = st.slider('Select the year range',2005, 2019, (2005, 2019))
-# 'Select the year range' -> Text to display
-# 2015 -> The lower bound
-# 2019 -> The higher bound
-# (2015, 2019) -> Default selected range
-
-#slider = alt.binding_range(min=2005, max=2019, step=1)
-#select_year = alt.selection_single(name="Year", fields=['Year'],bind=slider2, init={'Year': 2019})
-
 
 states = alt.topo_feature(data.us_10m.url, feature='states')
+
 
 # US states background
 background = alt.Chart(states).mark_geoshape(
@@ -89,70 +94,6 @@ points = alt.Chart(df1).mark_circle(
 
 
 
-
-### FIRST CHART ###
-bar1 = alt.Chart(df).mark_bar().encode(
-    x = alt.X('Year:O', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
-    y = alt.Y('Total:Q', scale=alt.Scale(zero=False), title='Total Cost ($)', axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
-    opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.7))
-).add_selection(
-    brush
-#).properties(
-#    width=800,
-#    height=500
-)
-
-rule1 = alt.Chart(df).mark_rule(color='red').encode(
-    y='mean(Total):Q',
-    size=alt.SizeValue(3)
-).transform_filter(
-    brush
-)
-################################
-### SECOND CHART ###
-bar2 = alt.Chart(df).mark_bar().encode(
-    x = alt.X('Year:O', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
-    y = alt.Y('Acres:Q', scale=alt.Scale(zero=False), title='Acres', axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
-    opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.7))
-).add_selection(
-    brush
-#).properties(
-#    width=800,
-#    height=500
-)
-
-rule2 = alt.Chart(df).mark_rule(color='red').encode(
-    y='mean(Acres):Q',
-    size=alt.SizeValue(3)
-).transform_filter(
-    brush
-)
-################################
-### THIRD CHART ###
-bar3 = alt.Chart(df).mark_bar().encode(
-    x = alt.X('Year:O', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
-    y = alt.Y('Fires:Q', scale=alt.Scale(zero=False), title='Number of Fires', axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
-    opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.7))
-).add_selection(
-    brush
-#).properties(
-#    width=800,
-#    height=500
-)
-
-rule3 = alt.Chart(df).mark_rule(color='red').encode(
-    y='mean(Fires):Q',
-    size=alt.SizeValue(3)
-).transform_filter(
-    brush
-)
-
-
-#st.write("## Total Supression Cost of Fires per Year")
-#bar1 + rule1
-#st.write("## Acres Burned per Year")
-#bar2 + rule2
-#st.write("## Number of Fires per Year")
-#bar3 + rule3
-st.write("## United States Map Showing Fires per Year")
-background + points
+if __name__ == "__main__":
+    display_title_and_info()
+    
