@@ -47,7 +47,7 @@ slider = st.slider('Select the year range',2005, 2019, (2005, 2019))
 # (2005, 2017) -> Default selected range
 
 #slider = alt.binding_range(min=2015, max=2019, step=1)
-select_year = alt.selection_single(name="Year", fields=['Year'],bind=slider, init={'Year': 2015})
+select_year = alt.selection_single(name="Year", fields=['Year'],bind=slider, init={'Year': 2019})
 
 
 states = alt.topo_feature(data.us_10m.url, feature='states')
