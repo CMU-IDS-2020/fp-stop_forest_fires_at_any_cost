@@ -73,14 +73,7 @@ points = alt.Chart(df1).mark_circle(
     longitude='Long:Q',
     latitude='Lat:Q',
     tooltip=['Name', 'Year', 'Size (acres)','Estimated Cost','Cause*']
-)#.add_selection(
-  #  select_year
-#).transform_filter(
- #   select_year
-#)
-
-
-
+)st.write(chart)
 
 
 ####SECTION NUMBER 4
