@@ -52,8 +52,8 @@ background = alt.Chart(states).mark_geoshape(
     fill='lightgray',
     stroke='white'
 ).properties(
-    width=500,
-    height=300
+    width=800,
+    height=500
 ).project('albersUsa')
 
 # airport positions on background
