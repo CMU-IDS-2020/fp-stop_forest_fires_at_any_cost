@@ -18,10 +18,10 @@ def display_title_and_info():
 brush = alt.selection(type='interval', encodings=['x'])
 
 ####Date Slider####
-def display_date_slider(df):
-    min_date = min(df["Year"]).to_pydatetime()
-    max_date = max(df["Year"]).to_pydatetime()
-    return st.slider("Select Date Range", min_date, max_date, (min_date, max_date))
+#def display_date_slider(df):
+ #   min_date = min(df["Year"]).to_pydatetime()
+   # max_date = max(df["Year"]).to_pydatetime()
+  #  return st.slider("Select Date Range", min_date, max_date, (min_date, max_date))
 
 
 ####SECTION NUMBER 1
