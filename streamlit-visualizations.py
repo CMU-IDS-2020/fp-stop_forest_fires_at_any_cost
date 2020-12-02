@@ -73,7 +73,7 @@ points = alt.Chart(df1).mark_circle(
     longitude='Long:Q',
     latitude='Lat:Q',
     tooltip=['Name', 'Year', 'Size (acres)','Estimated Cost','Cause*']
-)st.write(chart)
+)
 
 
 ####SECTION NUMBER 4
@@ -85,6 +85,6 @@ points = alt.Chart(df1).mark_circle(
 
 
 
-if __name__ == "__main__":
-    display_title_and_info()
+#if __name__ == "__main__":
+ #   display_title_and_info()
     
