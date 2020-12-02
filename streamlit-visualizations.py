@@ -46,7 +46,7 @@ brush = alt.selection(type='interval', encodings=['x'])
 # 2019 -> The higher bound
 # (2015, 2019) -> Default selected range
 
-slider = alt.binding_range(min=2015, max=2019, step=1)
+slider = alt.binding_range(min=2005, max=2019, step=1)
 select_year = alt.selection_single(name="Year", fields=['Year'],bind=slider, init={'Year': 2019})
 
 
