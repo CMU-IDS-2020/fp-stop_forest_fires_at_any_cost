@@ -7,18 +7,83 @@ import os
 import vega
 import matplotlib.pyplot as plt
 
-###Brief Summary####
-####Video timelapse#####
-
-###Brief summary/instructions on how to interact
-###Couple of illustrations for each excel page from the dataset####
-
-
-
 df = pd.read_excel('Data.xlsx')
 df1 = pd.read_excel('Data.xlsx',3)
 
 brush = alt.selection(type='interval', encodings=['x'])
+
+###Title####
+
+####SECTION NUMBER 1
+###Brief Summary####
+####Video timelapse#####
+
+
+###     TAYLOR and JOSH (Mostly TAYLOR)
+
+
+####SECTION NUMBER 2
+###Brief summary/instructions on how to interact
+###Couple of illustrations for Federal_Suppression_Cost####
+
+
+###      ARPIT and SAMMY
+
+
+
+####SECTION NUMBER 3
+###Brief summary/instructions on how to interact
+###Couple of illustrations for Wildfires_by_state####
+
+###     SAMMY
+
+#######################################
+####UNITED STATES MAP WITH OVERLAY#####
+#######################################
+
+slider = alt.binding_range(min=2015, max=2019, step=1)
+select_year = alt.selection_single(name="Year", fields=['Year'],bind=slider, init={'Year': 2015})
+
+
+states = alt.topo_feature(data.us_10m.url, feature='states')
+
+# US states background
+background = alt.Chart(states).mark_geoshape(
+    fill='lightgray',
+    stroke='white'
+).properties(
+    width=500,
+    height=300
+).project('albersUsa')
+
+# airport positions on background
+points = alt.Chart(df1).mark_circle(
+    size=10,
+    color='steelblue'
+).encode(
+    size=alt.Size("Size (acres):Q", scale=alt.Scale(range=[0, 1000]), legend=None),
+    longitude='Long:Q',
+    latitude='Lat:Q',
+    tooltip=['Name', 'Year', 'Size (acres)','Estimated Cost','Cause*']
+).add_selection(
+    select_year
+).transform_filter(
+    select_year
+)
+
+
+
+
+
+####SECTION NUMBER 4
+###Brief summary/instructions on how to interact
+###Couple of illustrations for the Predictor Model####
+
+
+###     TAYLOR and JOSH (Mostly TAYLOR)
+
+
+
 
 ### FIRST CHART ###
 bar1 = alt.Chart(df).mark_bar().encode(
@@ -77,42 +142,12 @@ rule3 = alt.Chart(df).mark_rule(color='red').encode(
     brush
 )
 
-####UNITED STATES MAP WITH OVERLAY#####
-slider = alt.binding_range(min=2015, max=2019, step=1)
-select_year = alt.selection_single(name="Year", fields=['Year'],bind=slider, init={'Year': 2015})
 
-
-states = alt.topo_feature(data.us_10m.url, feature='states')
-
-# US states background
-background = alt.Chart(states).mark_geoshape(
-    fill='lightgray',
-    stroke='white'
-).properties(
-    width=500,
-    height=300
-).project('albersUsa')
-
-# airport positions on background
-points = alt.Chart(df1).mark_circle(
-    size=10,
-    color='steelblue'
-).encode(
-    size=alt.Size("Size (acres):Q", scale=alt.Scale(range=[0, 1000]), legend=None),
-    longitude='Long:Q',
-    latitude='Lat:Q',
-    tooltip=['Name', 'Year', 'Size (acres)','Estimated Cost','Cause*']
-).add_selection(
-    select_year
-).transform_filter(
-    select_year
-)
-
-st.write("## Total Supression Cost of Fires per Year")
-bar1 + rule1
-st.write("## Acres Burned per Year")
-bar2 + rule2
-st.write("## Number of Fires per Year")
-bar3 + rule3
+#st.write("## Total Supression Cost of Fires per Year")
+#bar1 + rule1
+#st.write("## Acres Burned per Year")
+#bar2 + rule2
+#st.write("## Number of Fires per Year")
+#bar3 + rule3
 st.write("## United States Map Showing Fires per Year")
 background + points
