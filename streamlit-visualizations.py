@@ -40,13 +40,13 @@ brush = alt.selection(type='interval', encodings=['x'])
 #######################################
 ####UNITED STATES MAP WITH OVERLAY#####
 #######################################
-slider = st.slider('Select the year range',2015, 2019, (2015, 2019))
+#slider = st.slider('Select the year range',2015, 2019, (2015, 2019))
 # 'Select the year range' -> Text to display
 # 2015 -> The lower bound
 # 2019 -> The higher bound
 # (2015, 2019) -> Default selected range
 
-#slider = alt.binding_range(min=2015, max=2019, step=1)
+slider = alt.binding_range(min=2015, max=2019, step=1)
 select_year = alt.selection_single(name="Year", fields=['Year'],bind=slider, init={'Year': 2019})
 
 
