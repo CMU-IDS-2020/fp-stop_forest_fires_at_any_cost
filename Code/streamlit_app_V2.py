@@ -57,6 +57,19 @@ def get_perscribed_fires(df3):
     #perscribed_df = perscribed_df.groupby('Year')
     return perscribed_df
 
+###Alter name of causes
+df1 = df1.replace({'Cause':{'L':'Lightning (L)','U':'Unknown (U)','H':'Human (H)','OT':'Other Investigation (OT)','NR':'Not Reported (NR)'}})
+
+
+###Adjust Dates
+df1['Start Month'] = df1['Start Date'].dt.strftime('%B')
+
+months = ["January", "February", "March", "April", "May", "June", 
+          "July", "August", "September", "October", "November", "December"]
+df1['Start Month'] = pd.Categorical(df1['Start Month'], categories=months, ordered=True)
+df1 = df1.sort_values('Start Month')
+df1['Start Month'] = df1['Start Month'].astype(str)
+
 ####UNITED STATES MAP WITH OVERLAY#####
 def wildfires_by_state_MAP(df):
     states = alt.topo_feature(data.us_10m.url, 'states')
@@ -92,47 +105,84 @@ def wildfires_by_state_MAP(df):
         size=alt.condition(~hover, alt.value(10), alt.value(100))
     ).add_selection(hover)
 
+    slider2 = st.sidebar.slider('Select the year range',2005, 2019, (2005, 2019))
+    
+
+    causes = ['Select all', 'Unknown (U)', 'Human (H)', 'Lightning (L)', 'Other Investigation (OT)', 'Not Reported (NR)']
+
+    option1 = st.sidebar.multiselect('Filter Map by Cause', ('Select all', 'Unknown (U)', 
+                            'Human (H)', 'Lightning (L)', 'Other Investigation (OT)',
+                            'Not Reported (NR)'), default='Select all')
+    
+    if 'Select all' in option1:
+        option1=causes
+
+
+
+    months1 = ["Select all", "January", "February", "March", "April", "May", "June", 
+          "July", "August", "September", "October", "November", "December"]
+
+    option2 = st.sidebar.multiselect('Filter Map by Fire start Month', months1, default='Select all')
+
+    if 'Select all' in option2:
+        option2=months1
+
+    #option2 = st.sidebar.selectbox('Filter Map by Fire start Month', (df1['Start Date']))
+
+    
+
     fire_points = alt.Chart(df1).mark_circle(
         size=20,
         color='steelblue'
+        ).transform_filter(
+            (alt.datum['Year'] >= slider2[0]) & (alt.datum['Year'] <= slider2[1])
+        ).transform_filter(
+            alt.FieldOneOfPredicate(field='Cause', oneOf=option1)
+        ).transform_filter(
+            alt.FieldOneOfPredicate(field='Start Month', oneOf=option2)
         ).encode(
             #size=alt.Size("Size (acres):Q", scale=alt.Scale(range=[0, 1000]), legend=None),
                     longitude='Long:Q',
                     latitude='Lat:Q',
-        tooltip=['Name', 'Year', 'Acres','Estimated Cost','Cause']
+        tooltip=['Name', 'Year', 'Acres','Estimated Cost','Cause', 'Start Date']
     )     
 
     brush = alt.selection(type='interval')
 
-    chart_2 = alt.Chart(df).mark_point().encode(
+    chart_2 = alt.Chart(df).mark_point(
+        ).transform_filter(
+            (alt.datum['Year'] >= slider2[0]) & (alt.datum['Year'] <= slider2[1])
+        ).encode(
                 x='Year:Q',
                 y='Acres:Q',
                 color=alt.condition(brush, 'Cause:N', alt.value('lightgray'))
-                ).add_selection(brush).properties(
+        ).add_selection(brush
+        ).properties(
                 width=400,
                 height=200
-                )
+    )
     
-    chart_3 = alt.Chart(df).mark_bar().encode(
+    chart_3 = alt.Chart(df).mark_bar(
+        ).transform_filter(
+            (alt.datum['Year'] >= slider2[0]) & (alt.datum['Year'] <= slider2[1])
+        ).encode(
                 y='Cause:N',
                 color='Cause:N',
                 x='Number of Fires:Q'
-                ).transform_filter(brush).properties(
+        ).transform_filter(brush
+        ).properties(
                 width=400,
                 height=80
-                )
+    )
+
+    ### Checkbox for showing table (raw) data
+    if st.sidebar.checkbox("Show Raw Data"):
+        st.write(df1)
+
 
     map_chart = background + capital_points + fire_points + text
 
     map_chart | chart_2 & chart_3
-
-    slider2 = st.slider('Select the year range',2005, 2019, (2005, 2019))
-
-    option1 = st.selectbox('Filter Map by Cause', ('Total', 'Unknown (U)', 
-                            'Human (H)', 'Lightning (L)', 'Other Investigation (OT)',
-                            'Not Reported (NR)'))
-    
-    option2 = st.selectbox('Filter Map by Fire start Month', (df1['Start Date']))    
  
 if __name__ == "__main__":
     wildfires_by_state_MAP(df)
