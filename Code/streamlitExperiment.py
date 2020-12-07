@@ -1,13 +1,24 @@
 import altair as alt
 import pandas as pd
 import streamlit as st
-import os
-import vega
+import os, vega, time, random
 import pandas as pd
 import numpy as np
 from datetime import datetime 
 import plotly.express as px
 import matplotlib.pyplot as plt
+from itertools import cycle
+
+# Screen Setup
+st.beta_set_page_config(layout="wide")
+st.title('Map of Wildfires caused by Humans and Nature over Time')
+st.subheader("Animation")
+animations = {"None": None, "Slow": 0.4, "Medium": 0.2, "Fast": 0.05}
+animate = st.radio("", options=list(animations.keys()), index=2)
+animation_speed = animations[animate]
+location1 = st.empty()
+sliderloc = st.empty()
+years_values = [year for year in range(1980, 2017)]
 
 #Preparing Map Images
 image_bank = ['image_1.png', 'image_2.png', 'image_3.png', 'image_4.png', 
@@ -33,38 +44,42 @@ def dataloader():
     df['BurnTime'] = abs(df['OUTDATED'] - df['STARTDATED'])
     return df
 
-st.beta_set_page_config(layout="wide")
-df = dataloader()
-
 def dataChanger(Year):
     newdata = df[ df['YEAR_'] == Year ]
     newdata = newdata.groupby(['Year', 'Cause'], as_index=False)['BurnTime', 'Acres'].sum(numeric_only=False)
     return newdata
 
-
-def causeVisualization():
-    #Designing Streamlit Page
-    st.title('Map of Wildfires caused by Humans and Nature over Time')
-    x = st.slider('Check out Data Over Time', min_value=1980, max_value=2016)
-
-
-    col1, col2, col3 = st.beta_columns(3)
+def causePlots(x):
+    df = dataChanger(x)
+    col1, col2, col3 = location1.beta_columns((2,1,1))
 
     #Map Image
-    col1.image(f'image_{x - 1979}.png', width=825)
+    col1.image(image_bank[x-1979], width=1225)
 
     #Create Pie Chart for Acres Burned
-    newdata= dataChanger(x)
-    fig = px.pie(newdata, values='BurnTime', names='Cause', title=f'Burn Days per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
+    fig = px.pie(df, values='BurnTime', names='Cause', title=f'Burn Days per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
     fig.update_layout(width=600,height=275)
     col2.plotly_chart(fig, width=600,height=275)
 
     #create Pie Chart for Average Burn Time
-    fig2 = px.pie(newdata, values='Acres', names='Cause', title=f'Acres Burned per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
+    fig2 = px.pie(df, values='Acres', names='Cause', title=f'Acres Burned per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
     fig2.update_layout(width=600,height=275)
     col2.plotly_chart(fig2, width=600,height=275)
 
     col3.title('Understanding Fire Trends by Cause')
     col3.markdown('View the side-by-side comparison of human-caused and naturally-caused fires from the years 1985 - 2019. Observe the changes in number of fires (seen on the map) versus burn days and acres burned. Consider the fact that the greater amount of burn days increase the length of time resources are expended to suppress a fire. Also consider that, as acres-burned grows, the ability of fire fighters to supppress a fire lessens.')
 
-causeVisualization()
+def render_slider(year):
+    key = random.random() if animation_speed else None
+    year = sliderloc.slider("",min_value=1980, max_value=2016, key=key)
+    return year
+
+df = dataloader()
+if animation_speed:
+    for year in cycle(years_values):
+        time.sleep(animation_speed)
+        render_slider(year)
+        causePlots(year)
+else:
+    year = render_slider(1980)
+    causePlots(year)
