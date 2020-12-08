@@ -35,24 +35,25 @@ image_bank = ['image_1.png', 'image_2.png', 'image_3.png', 'image_4.png',
 #Preparing the DFs and aggregations for Pie Charts
 @st.cache
 def dataloader():
-    df = pd.read_csv('Fires2016v2.csv')
-    df['Cause'] = df['CAUSE']
-    df['Year'] = df['YEAR_']
-    df['Acres'] = df['TOTALACRES']
-    df['STARTDATED'] = pd.to_datetime(df['STARTDATED'], errors='coerce')
-    df['OUTDATED'] = pd.to_datetime(df['OUTDATED'], errors='coerce')
-    df['BurnTime'] = abs(df['OUTDATED'] - df['STARTDATED'])
-    df['BurnTime'].fillna(pd.Timedelta(days=0), inplace=True)
-    df['BurnTime'] = df['BurnTime'].dt.days.astype(int)
+    df = pd.read_csv('updated.csv')
+    # df['Cause'] = df['CAUSE']
+    # df['Year'] = df['YEAR_']
+    # df['Acres'] = df['TOTALACRES']
+    # df['STARTDATED'] = pd.to_datetime(df['STARTDATED'], errors='coerce')
+    # df['OUTDATED'] = pd.to_datetime(df['OUTDATED'], errors='coerce')
+    # df['BurnTime'] = abs(df['OUTDATED'] - df['STARTDATED'])
+    # df['BurnTime'].fillna(pd.Timedelta(days=0), inplace=True)
+    # df['BurnTime'] = df['BurnTime'].dt.days.astype(int)
     return df
 
-def dataChanger(Year):
-    newdata = df[ df['YEAR_'] == Year ]
-    newdata = newdata.groupby(['Year', 'Cause'], as_index=False)[['BurnTime', 'Acres']].sum(numeric_only=False)
-    return newdata
+def dataChanger(df, Year):
+    df = df[ df['Year'] == Year ]
+    # newdata = df.groupby(['Year', 'Cause'], as_index=False)[['BurnTime', 'Acres']].sum(numeric_only=False)
+    return df
 
 def causePlots(x):
-    df = dataChanger(x)
+    df1 = dataloader()
+    df = dataChanger(df1, x)
     col1, col2, col3 = location1.beta_columns((2,1,1))
 
     #Map Image
@@ -82,8 +83,7 @@ def render_slider(year):
     year = sliderloc.slider("",min_value=1980, max_value=2016, key=key)
     return year
 
-df = dataloader()
-df.to_csv('BurnDays.csv', index=False)
+
 if animation_speed:
     for year in cycle(years_values):
         time.sleep(animation_speed)
