@@ -42,11 +42,13 @@ def dataloader():
     df['STARTDATED'] = pd.to_datetime(df['STARTDATED'], errors='coerce')
     df['OUTDATED'] = pd.to_datetime(df['OUTDATED'], errors='coerce')
     df['BurnTime'] = abs(df['OUTDATED'] - df['STARTDATED'])
+    df['BurnTime'].fillna(pd.Timedelta(days=0), inplace=True)
+    df['BurnTime'] = df['BurnTime'].dt.days.astype(int)
     return df
 
 def dataChanger(Year):
     newdata = df[ df['YEAR_'] == Year ]
-    newdata = newdata.groupby(['Year', 'Cause'], as_index=False)['BurnTime', 'Acres'].sum(numeric_only=False)
+    newdata = newdata.groupby(['Year', 'Cause'], as_index=False)[['BurnTime', 'Acres']].sum(numeric_only=False)
     return newdata
 
 def causePlots(x):
@@ -54,12 +56,18 @@ def causePlots(x):
     col1, col2, col3 = location1.beta_columns((2,1,1))
 
     #Map Image
-    col1.image(image_bank[x-1979], width=1225)
+    col1.image(image_bank[x - 1980], width=1225)
 
     #Create Pie Chart for Acres Burned
-    fig = px.pie(df, values='BurnTime', names='Cause', title=f'Burn Days per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
-    fig.update_layout(width=600,height=275)
-    col2.plotly_chart(fig, width=600,height=275)
+    human = df[df['Cause'] == 'Human']
+    natural = df[df['Cause'] == 'Natural']
+    
+    if human['BurnTime'].iloc[0] == 0 and natural['BurnTime'].iloc[0] == 0: 
+        col2.markdown('Both human-caused and nature-caused fires average 0 days for this year')
+    else: 
+        fig = px.pie(df, values='BurnTime', names='Cause', title=f'Burn Days per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
+        fig.update_layout(width=600,height=275)
+        col2.plotly_chart(fig, width=600,height=275)
 
     #create Pie Chart for Average Burn Time
     fig2 = px.pie(df, values='Acres', names='Cause', title=f'Acres Burned per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
@@ -75,6 +83,7 @@ def render_slider(year):
     return year
 
 df = dataloader()
+df.to_csv('BurnDays.csv', index=False)
 if animation_speed:
     for year in cycle(years_values):
         time.sleep(animation_speed)
