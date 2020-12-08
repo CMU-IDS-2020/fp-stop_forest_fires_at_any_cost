@@ -1,7 +1,7 @@
 import altair as alt
 import pandas as pd
 import streamlit as st
-import os, vega, time, random
+import os, vega, time, random, base64
 import pandas as pd
 import numpy as np
 from datetime import datetime 
@@ -92,3 +92,90 @@ if animation_speed:
 else:
     year = render_slider(1980)
     causePlots(year)
+
+@st.cache(allow_output_mutation=True)
+def dataLoader2():
+    predict_df = pd.read_csv('national_cause_predictions.csv')
+    predict_df2 = predict_df[predict_df['Year'] >=2017]
+    predict_df2['Cost'] = predict_df2['Acres'] * 86
+    return predict_df2
+
+def dataChanger2(humanperc, naturalperc):
+    predict = dataLoader2()
+    predict['Acre_result'] = np.where(predict['Cause']=='Human', predict['Acres'] - predict['Acres']*humanperc, predict['Acres'] - predict['Acres']*naturalperc)
+    predict['Cost_result'] = np.where(predict['Cause']=='Human', predict['Cost'] - predict['Cost']*humanperc, predict['Cost'] - predict['Cost']*naturalperc)
+    return predict
+
+def predictPlot(predict_df2, flag, num):
+    col1, col2 = area51.beta_columns((2,1))
+    if flag == 1: 
+        charted = alt.Chart().mark_bar().encode(alt.X('Acres'), alt.Y('Cause:O',  axis=alt.Axis(labels=False)), color='Cause:O',  tooltip=['Acres', 'Cause', 'Year'])
+        texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Acres:Q')
+
+        col1.altair_chart(alt.layer(charted, texted, data=predict_df2).properties(width=1500, height=150).facet(row='Year:O').configure_legend(labelFontSize=20, titleFontSize=25).configure_axis(labelFontSize=20, titleFontSize=20))
+    elif flag == 2: 
+        charted = alt.Chart().mark_bar().encode(alt.X('Acre_result'), alt.Y('Cause:O',  axis=alt.Axis(labels=False)), color='Cause:O',  tooltip=['Acre_result', 'Cause', 'Year'])
+        texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Acre_result:Q')
+
+        col1.altair_chart(alt.layer(charted, texted, data=predict_df2).properties(width=1500, height=150).facet(row='Year:O').configure_legend(labelFontSize=20, titleFontSize=25).configure_axis(labelFontSize=20, titleFontSize=20))
+
+    file_ = open("fire.gif", "rb")
+    contents = file_.read()
+    data_url = base64.b64encode(contents).decode("utf-8")
+    file_.close()
+    num = 900 - 900*num
+    col2.markdown(f'<img src="data:image/gif;base64,{data_url}" width="{num}" height="{num}" alt="fire gif">', unsafe_allow_html=True)
+    col2.markdown('<b> Watch the fire proportionally decrease by your human-caused fire input </b>', unsafe_allow_html=True)
+
+def predictCost(df, flag, num):
+    col21, col22 = location2.beta_columns((2,1))
+    if flag == 1: 
+        charted = alt.Chart().mark_bar().encode(alt.X('Cost'), alt.Y('Cause:O',  axis=alt.Axis(labels=False)), color='Cause:O',  tooltip=['Cost', 'Cause', 'Year'])
+        texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Cost:Q')
+
+        col21.altair_chart(alt.layer(charted, texted, data=df).properties(width=1500, height=150).facet(row='Year:O').configure_legend(labelFontSize=20, titleFontSize=25).configure_axis(labelFontSize=20, titleFontSize=20))
+    elif flag == 2: 
+        charted = alt.Chart().mark_bar().encode(alt.X('Cost_result'), alt.Y('Cause:O',  axis=alt.Axis(labels=False)), color='Cause:O',  tooltip=['Cost_result', 'Cause', 'Year'])
+        texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Cost_result:Q')
+
+        col21.altair_chart(alt.layer(charted, texted, data=df).properties(width=1500, height=150).facet(row='Year:O').configure_legend(labelFontSize=20, titleFontSize=25).configure_axis(labelFontSize=20, titleFontSize=20))
+
+    file_ = open("money.gif", "rb")
+    contents = file_.read()
+    data_url = base64.b64encode(contents).decode("utf-8")
+    file_.close()
+    num = 700 - 700*num
+    col22.markdown(f'<img src="data:image/gif;base64,{data_url}" width="{num}" height="{num}" alt="fire gif">', unsafe_allow_html=True,)
+    col22.markdown('<b> Watch the money proportionally decrease by your human-caused fire input </b>', unsafe_allow_html=True)
+
+
+def render_predictions():
+    st.title('Decrease the Impact')
+    st.markdown("Use the inputs below to determine prediction")
+    human_input = st.text_input('Enter a number between 0 and 100 to decrease Human Impact:')
+    fire_input = st.text_input('Enter a number between 0 and 100 to decrease Natural Impact:')
+    if human_input == '':
+        human_input = 0
+    if fire_input == '':
+        fire_input = 0
+    try: 
+        x, y = int(human_input), int(fire_input)
+    except: 
+        x, y = 0, 0
+    return x, y 
+
+st.title('Human vs. Natural Fire Predictions')
+area51 = st.empty()
+human, natural = render_predictions()
+st.title('Human vs. Natural Cost Predictions')
+location2 = st.empty()
+if human == 0 and natural == 0:
+    df = dataLoader2()
+    flag = 1
+    num = 0
+else:
+    df = dataChanger2(human/100, natural/100)
+    flag = 2
+    num = human/100
+predictPlot(df, flag, num)
+predictCost(df, flag, num)
