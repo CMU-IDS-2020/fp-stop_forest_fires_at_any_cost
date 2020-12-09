@@ -584,7 +584,7 @@ def causePlots(x):
     col1, col2, col3 = location1.beta_columns((2,1,1))
 	
     #Map Image
-    col1.image(image_bank[x - 1980], width=900)
+    col1.image(image_bank[x - 1980], width=800)
 	
     #Create Pie Chart for Acres Burned
     human = df[df['Cause'] == 'Human']
@@ -594,13 +594,13 @@ def causePlots(x):
         col2.markdown('Both human-caused and nature-caused fires average 0 days for this year')
     else: 
         fig = px.pie(df, values='BurnTime', names='Cause', title=f'Burn Days per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
-        fig.update_layout(width=500,height=275)
-        col2.plotly_chart(fig, width=500,height=275)
+        fig.update_layout(width=400,height=275)
+        col2.plotly_chart(fig, width=400,height=275)
 
         #create Pie Chart for Average Burn Time
         fig2 = px.pie(df, values='Acres', names='Cause', title=f'Acres Burned per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
-        fig2.update_layout(width=500,height=275)
-        col2.plotly_chart(fig2, width=500,height=275)
+        fig2.update_layout(width=400,height=275)
+        col2.plotly_chart(fig2, width=400,height=275)
 
         col3.title('Understanding Fire Trends by Cause')
         col3.markdown('View the side-by-side comparison of human-caused and naturally-caused fires from the years 1985 - 2019. Observe the changes in number of fires (seen on the map) versus burn days and acres burned. Consider the fact that the greater amount of burn days increase the length of time resources are expended to suppress a fire. Also consider that, as acres-burned grows, the ability of fire fighters to supppress a fire lessens.')
@@ -624,7 +624,7 @@ def showCount4():
     count2 = 4700398
     i = .30
     count1 = 9500000
-    for number in range(1, 10):
+    for number in range(1, 10000):
         count1 += i
         count2 += i2
         showCount3(count1, count2)
