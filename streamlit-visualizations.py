@@ -624,7 +624,7 @@ def showCount4():
     count2 = 4700398
     i = .30
     count1 = 9500000
-    for number in range(1, 10000000):
+    for number in range(1, 10000):
         count1 += i
         count2 += i2
         showCount3(count1, count2)
