@@ -640,7 +640,7 @@ if __name__ == "__main__":
     
     if (add_selectbox == 'Introduction'):
         countLoc = st.empty()
-	#showCount4()
+        showCount4()
         st.title('Map of Wildfires caused by Humans and Nature over time')
 	#buttLoc= st.button("Animate")
 	#buttLoc2= st.button("Stop Animate")
