@@ -337,23 +337,23 @@ def predictPlot(predict3, predict4, flag, num):
     if flag == 1: 
         charted = alt.Chart().mark_bar(color='firebrick').encode(alt.X('Acres', axis=alt.Axis(title='Acres (millions)')), alt.Y('Year:O'), tooltip=['Acres', 'Year'])
         texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Acres:Q')
-        col1.altair_chart(alt.layer(charted, texted, data=predict3).properties(width=1500, height=500, title='Human Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
+        col1.altair_chart(alt.layer(charted, texted, data=predict3).properties(width=1000, height=350, title='Human Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
         charted = alt.Chart().mark_bar(color='forestgreen').encode(alt.X('Acres', axis=alt.Axis(title='Acres (millions)')), alt.Y('Year:O'), tooltip=['Acres', 'Year'])
         texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Acres:Q')
-        col1.altair_chart(alt.layer(charted, texted, data=predict4).properties(width=1500, height=500, title='Natural Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
+        col1.altair_chart(alt.layer(charted, texted, data=predict4).properties(width=1000, height=350, title='Natural Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
     elif flag == 2: 
         charted = alt.Chart().mark_bar(color='firebrick').encode(alt.X('Acre_result', axis=alt.Axis(title='Acres (millions)')), alt.Y('Year:O'), tooltip=['Acre_result', 'Year'])
         texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Acre_result:Q')
-        col1.altair_chart(alt.layer(charted, texted, data=predict3).properties(width=1500, height=500, title='Human Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
+        col1.altair_chart(alt.layer(charted, texted, data=predict3).properties(width=1000, height=350, title='Human Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
         charted = alt.Chart().mark_bar(color='forestgreen').encode(alt.X('Acre_result', axis=alt.Axis(title='Acres (millions)')), alt.Y('Year:O'), tooltip=['Acre_result', 'Year'])
         texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Acre_result:Q')
-        col1.altair_chart(alt.layer(charted, texted, data=predict4).properties(width=1500, height=500, title='Natural Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
+        col1.altair_chart(alt.layer(charted, texted, data=predict4).properties(width=1000, height=350, title='Natural Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
 
     file_ = open("fire.gif", "rb")
     contents = file_.read()
     data_url = base64.b64encode(contents).decode("utf-8")
     file_.close()
-    num = 900 - 900*num
+    num = 700 - 700*num
     col2.markdown(f'<img src="data:image/gif;base64,{data_url}" width="{num}" height="{num}" alt="fire gif">', unsafe_allow_html=True)
     col2.markdown('<b> Watch the fire proportionally decrease by your human-caused fire input </b>', unsafe_allow_html=True)
 
@@ -362,17 +362,17 @@ def predictCost(predict3, predict4, flag, num):
     if flag == 1: 
         charted = alt.Chart().mark_bar(color='firebrick').encode(alt.X('Cost', axis=alt.Axis(format='$', title='Cost (millions)')), alt.Y('Year:O'), tooltip=['Cost', 'Year'])
         texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Cost:Q')
-        col21.altair_chart(alt.layer(charted, texted, data=predict3).properties(width=1500, height=500, title='Human Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
+        col21.altair_chart(alt.layer(charted, texted, data=predict3).properties(width=1000, height=350, title='Human Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
         charted = alt.Chart().mark_bar(color='forestgreen').encode(alt.X('Cost', axis=alt.Axis(format='$', title='Cost (millions)')), alt.Y('Year:O'), tooltip=['Cost', 'Year'])
         texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text=alt.Text('Cost:Q', format=','))
-        col21.altair_chart(alt.layer(charted, texted, data=predict4).properties(width=1500, height=500, title='Natural Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
+        col21.altair_chart(alt.layer(charted, texted, data=predict4).properties(width=1000, height=350, title='Natural Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
     elif flag == 2: 
         charted = alt.Chart().mark_bar(color='firebrick').encode(alt.X('Cost_result', axis=alt.Axis(format='$', title='Cost (millions)')), alt.Y('Year:O'), tooltip=['Cost_result', 'Year'])
         texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Cost:Q')
-        col21.altair_chart(alt.layer(charted, texted, data=predict3).properties(width=1500, height=500, title='Human Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
+        col21.altair_chart(alt.layer(charted, texted, data=predict3).properties(width=1000, height=350, title='Human Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
         charted = alt.Chart().mark_bar(color='forestgreen').encode(alt.X('Cost_result', axis=alt.Axis(format='$', title='Cost (millions)')), alt.Y('Year:O'), tooltip=['Cost_result', 'Year'])
         texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text=alt.Text('Cost_result:Q', format=','))
-        col21.altair_chart(alt.layer(charted, texted, data=predict4).properties(width=1500, height=500, title='Natural Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
+        col21.altair_chart(alt.layer(charted, texted, data=predict4).properties(width=1000, height=350, title='Natural Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
     file_ = open("money.gif", "rb")
     contents = file_.read()
     data_url = base64.b64encode(contents).decode("utf-8")
