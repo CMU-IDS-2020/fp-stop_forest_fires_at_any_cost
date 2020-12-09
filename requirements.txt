@@ -9,7 +9,6 @@ statsmodels
 matplotlib
 vega
 vega_datasets
-plotly.express
 mpl_toolkits
 seaborn
 itertools
