@@ -621,22 +621,22 @@ if __name__ == "__main__":
     
     if (add_selectbox == 'Introduction'):
         st.title('Map of Wildfires caused by Humans and Nature over time')
-	buttLoc= st.button("Animate")
-	buttLoc2= st.button("Stop Animate")
-        animation_speed = None
-        location1 = st.empty()
-        sliderloc = st.empty()
-        years_values = [year for year in range(1980, 2017)]
-        if buttLoc:
-            if not buttLoc2:
-                for year in cycle(years_values):
-                    animation_speed= .4
-                    time.sleep(animation_speed)
-                    render_slider(year)
-                    causePlots(year)
-        else:
-            year = render_slider(1980)
-            causePlots(year)
+	#buttLoc= st.button("Animate")
+	#buttLoc2= st.button("Stop Animate")
+        #animation_speed = None
+        #location1 = st.empty()
+        #sliderloc = st.empty()
+        #years_values = [year for year in range(1980, 2017)]
+        #if buttLoc:
+            #if not buttLoc2:
+                #for year in cycle(years_values):
+                    #animation_speed= .4
+                    #time.sleep(animation_speed)
+                    #render_slider(year)
+                    #causePlots(year)
+        #else:
+        year = render_slider(1980)
+        causePlots(year)
     elif(add_selectbox == 'Analysis'):
         sammys_viz()
         other_viz()
