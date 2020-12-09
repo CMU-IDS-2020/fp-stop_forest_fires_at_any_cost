@@ -624,7 +624,7 @@ if __name__ == "__main__":
 	#buttLoc= st.button("Animate")
 	#buttLoc2= st.button("Stop Animate")
         animation_speed = None
-        #location1 = st.empty()
+        location1 = st.empty()
         sliderloc = st.empty()
         #years_values = [year for year in range(1980, 2017)]
         #if buttLoc:
