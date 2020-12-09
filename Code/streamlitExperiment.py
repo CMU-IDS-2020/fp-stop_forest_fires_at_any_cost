@@ -36,14 +36,6 @@ image_bank = ['image_1.png', 'image_2.png', 'image_3.png', 'image_4.png',
 @st.cache
 def dataloader():
     df = pd.read_csv('updated.csv')
-    # df['Cause'] = df['CAUSE']
-    # df['Year'] = df['YEAR_']
-    # df['Acres'] = df['TOTALACRES']
-    # df['STARTDATED'] = pd.to_datetime(df['STARTDATED'], errors='coerce')
-    # df['OUTDATED'] = pd.to_datetime(df['OUTDATED'], errors='coerce')
-    # df['BurnTime'] = abs(df['OUTDATED'] - df['STARTDATED'])
-    # df['BurnTime'].fillna(pd.Timedelta(days=0), inplace=True)
-    # df['BurnTime'] = df['BurnTime'].dt.days.astype(int)
     return df
 
 def dataChanger(df, Year):
@@ -108,16 +100,22 @@ def dataChanger2(humanperc, naturalperc):
 
 def predictPlot(predict_df2, flag, num):
     col1, col2 = area51.beta_columns((2,1))
+    predict3 = predict_df2[predict_df2['Cause']== 'Human']
+    predict4 = predict_df2[predict_df2['Cause']== 'Natural']
     if flag == 1: 
-        charted = alt.Chart().mark_bar().encode(alt.X('Acres'), alt.Y('Cause:O',  axis=alt.Axis(labels=False)), color='Cause:O',  tooltip=['Acres', 'Cause', 'Year'])
+        charted = alt.Chart().mark_bar(color='firebrick').encode(alt.X('Acres'), alt.Y('Year:O'), tooltip=['Acres', 'Year'])
         texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Acres:Q')
-
-        col1.altair_chart(alt.layer(charted, texted, data=predict_df2).properties(width=1500, height=150).facet(row='Year:O').configure_legend(labelFontSize=20, titleFontSize=25).configure_axis(labelFontSize=20, titleFontSize=20))
+        col1.altair_chart(alt.layer(charted, texted, data=predict3).properties(width=1500, height=500, title='Human Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
+        charted = alt.Chart().mark_bar(color='forestgreen').encode(alt.X('Acres'), alt.Y('Year:O'), tooltip=['Acres', 'Year'])
+        texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Acres:Q')
+        col1.altair_chart(alt.layer(charted, texted, data=predict4).properties(width=1500, height=500, title='Natural Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
     elif flag == 2: 
-        charted = alt.Chart().mark_bar().encode(alt.X('Acre_result'), alt.Y('Cause:O',  axis=alt.Axis(labels=False)), color='Cause:O',  tooltip=['Acre_result', 'Cause', 'Year'])
+        charted = alt.Chart().mark_bar(color='firebrick').encode(alt.X('Acre_result'), alt.Y('Year:O'), tooltip=['Acre_result', 'Year'])
         texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Acre_result:Q')
-
-        col1.altair_chart(alt.layer(charted, texted, data=predict_df2).properties(width=1500, height=150).facet(row='Year:O').configure_legend(labelFontSize=20, titleFontSize=25).configure_axis(labelFontSize=20, titleFontSize=20))
+        col1.altair_chart(alt.layer(charted, texted, data=predict3).properties(width=1500, height=500, title='Human Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
+        charted = alt.Chart().mark_bar(color='forestgreen').encode(alt.X('Acre_result'), alt.Y('Year:O'), tooltip=['Acre_result', 'Year'])
+        texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Acre_result:Q')
+        col1.altair_chart(alt.layer(charted, texted, data=predict4).properties(width=1500, height=500, title='Natural Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
 
     file_ = open("fire.gif", "rb")
     contents = file_.read()
@@ -129,17 +127,22 @@ def predictPlot(predict_df2, flag, num):
 
 def predictCost(df, flag, num):
     col21, col22 = location2.beta_columns((2,1))
+    predict3 = df[df['Cause']== 'Human']
+    predict4 = df[df['Cause']== 'Natural']
     if flag == 1: 
-        charted = alt.Chart().mark_bar().encode(alt.X('Cost'), alt.Y('Cause:O',  axis=alt.Axis(labels=False)), color='Cause:O',  tooltip=['Cost', 'Cause', 'Year'])
+        charted = alt.Chart().mark_bar(color='firebrick').encode(alt.X('Cost'), alt.Y('Year:O'), tooltip=['Cost', 'Year'])
         texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Cost:Q')
-
-        col21.altair_chart(alt.layer(charted, texted, data=df).properties(width=1500, height=150).facet(row='Year:O').configure_legend(labelFontSize=20, titleFontSize=25).configure_axis(labelFontSize=20, titleFontSize=20))
+        col21.altair_chart(alt.layer(charted, texted, data=predict3).properties(width=1500, height=500, title='Human Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
+        charted = alt.Chart().mark_bar(color='forestgreen').encode(alt.X('Cost'), alt.Y('Year:O'), tooltip=['Cost', 'Year'])
+        texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Cost:Q')
+        col21.altair_chart(alt.layer(charted, texted, data=predict4).properties(width=1500, height=500, title='Natural Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
     elif flag == 2: 
-        charted = alt.Chart().mark_bar().encode(alt.X('Cost_result'), alt.Y('Cause:O',  axis=alt.Axis(labels=False)), color='Cause:O',  tooltip=['Cost_result', 'Cause', 'Year'])
+        charted = alt.Chart().mark_bar(color='firebrick').encode(alt.X('Cost_result'), alt.Y('Year:O'), tooltip=['Cost_result', 'Year'])
+        texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Cost:Q')
+        col21.altair_chart(alt.layer(charted, texted, data=predict3).properties(width=1500, height=500, title='Human Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
+        charted = alt.Chart().mark_bar(color='forestgreen').encode(alt.X('Cost_result'), alt.Y('Year:O'), tooltip=['Cost_result', 'Year'])
         texted = charted.mark_text(align='left', baseline='middle', dx=3, fontSize=25).encode(text='Cost_result:Q')
-
-        col21.altair_chart(alt.layer(charted, texted, data=df).properties(width=1500, height=150).facet(row='Year:O').configure_legend(labelFontSize=20, titleFontSize=25).configure_axis(labelFontSize=20, titleFontSize=20))
-
+        col21.altair_chart(alt.layer(charted, texted, data=predict4).properties(width=1500, height=500, title='Natural Predictions').configure_axis(labelFontSize=20, titleFontSize=20))
     file_ = open("money.gif", "rb")
     contents = file_.read()
     data_url = base64.b64encode(contents).decode("utf-8")
@@ -164,7 +167,11 @@ def render_predictions():
         x, y = 0, 0
     return x, y 
 
+st.title('Time Series Forecasting: Future Acres Burned and Furure Cost of Suppression')
+st.markdown('## Below you can see the forecasting results of a time series analysis on acres burned from both naturally-caused and human-caused fires. Our model projects five years out from the conclusion of the dataset. Evidently, fires are on the rise. Perhaps shockingly, fires caused by humans are not comparable to those caused by nature. This is likely due to climate change inciting longer dry spells and increasing the length of time for which our nation is at risk for wild fires. As the nation looks into the future, we need to prepare for these rising fire-counts, as well as their subsequent suppression costs. Based on these metrics, we must start to consider what kind of influence we can have on these predictions. Was Smokey Bear right? Are we the only ones who can prevent wildfires?')
+st.markdown('## Inspired by this mantra, explore the predictor model below to investigate for yourself. If we were able to reduce human-caused fires by 30% how many acres would still burn? How much would it cost? ')
 st.title('Human vs. Natural Fire Predictions')
+other = st.empty()
 area51 = st.empty()
 human, natural = render_predictions()
 st.title('Human vs. Natural Cost Predictions')
