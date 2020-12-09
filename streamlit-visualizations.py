@@ -620,7 +620,7 @@ if __name__ == "__main__":
     )
     
     if (add_selectbox == 'Introduction'):
-	st.title('Map of Wildfires caused by Humans and Nature over Time')
+        st.title('Map of Wildfires caused by Humans and Nature over time')
 	buttLoc= st.button("Animate")
 	buttLoc2= st.button("Stop Animate")
 	animation_speed = None
