@@ -18,11 +18,13 @@ from IPython.display import HTML
 
 @st.cache
 def load5():
-    df5 = pd.read_csv('predict_raw.csv')
+    df5 = pd.read_csv('predict_raw.zip')
     return df5
 
-def other_viz():
-    result = load5()
+result = load5()
+
+def other_viz(result):
+    #result = load5()
     years = list(result['YEAR_'].sort_values().unique())
     states = list(result['STATE'].sort_values().unique())
  
@@ -47,18 +49,20 @@ def other_viz():
     year_select = alt.selection_single(fields=['YEAR_'], bind=year_dropdown)
 
     state_dropdown = alt.binding_select(options=states)
-    state_select = alt.selection_single(fields=['YEAR_'], bind=state_dropdown)
+    state_select = alt.selection_single(fields=['STATE'], bind=state_dropdown)
 
     fire_type = alt.Chart(firetype_df).mark_bar(color='firebrick').encode(
         x=alt.X('Average:Q', axis=alt.Axis(format='.0%')),
         y='FIRETYPE:N',
-        opacity=alt.condition(
-            year_select & state_select,
-            alt.value(1),
-            alt.value(.1)
-        )
-    ).add_selection(year_select, state_select).properties(width = 300, height = 200, title = f'')
-
+        #opacity=alt.condition(
+        #    year_select & state_select,
+        #    alt.value(1),
+        #    alt.value(.1)
+    ).add_selection(year_select,state_select
+    ).transform_filter(year_select
+    ).transform_filter(state_select
+    ).properties(width = 300, height = 200, title = f''
+)
     fire_total = alt.Chart(firetype_df2).mark_circle(
     opacity=0.8,
     stroke='black',
@@ -75,8 +79,11 @@ def other_viz():
     ).properties(width=400, height=200, title ='National Count of Fires by Type')
 
     fire_type | fire_total
-def other_viz3():
-    result = load5()
+
+
+
+def other_viz3(result):
+    #result = load5()
     types = ['Action Fires/Supressed Fires', 
                 'Natural Out', 
                 'Support Action/Assist Fire', 
@@ -112,14 +119,5 @@ def other_viz3():
     highlight_types
 
 if __name__ == "__main__":
-    other_viz()
-    other_viz3()
-
-    
-       
-
-
-
-
-
-
+    other_viz(result)
+    other_viz3(result)
