@@ -656,7 +656,7 @@ if __name__ == "__main__":
         else:
             year = render_slider(1980)
             causePlots(year)
-	countLoc = st.empty()
+        countLoc = st.empty()
         showCount4()
     elif(add_selectbox == 'Analysis'):
         sammys_viz()
