@@ -9,3 +9,5 @@ statsmodels
 matplotlib
 vega
 vega_datasets
+plotly
+mpl_toolkits
