@@ -533,7 +533,7 @@ def sammys_viz():
             brush
     )
 
-     rule4 = alt.Chart(df_main).mark_rule(color='red').encode(
+    rule4 = alt.Chart(df_main).mark_rule(color='red').encode(
             y='mean(cost_per_acre):Q',
             size=alt.SizeValue(3)
         ).transform_filter(
