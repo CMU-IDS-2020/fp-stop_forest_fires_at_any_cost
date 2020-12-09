@@ -698,10 +698,8 @@ if __name__ == "__main__":
             causePlots(year)
         countLoc = st.empty()
         showCount4()
-    elif(add_selectbox == 'Analysis'):
+    elif(add_selectbox == 'Exploration'):
         sammys_viz()
-        other_viz()
-        other_viz2()
         other_viz3()
 
     elif(add_selectbox == 'Predictions'):
