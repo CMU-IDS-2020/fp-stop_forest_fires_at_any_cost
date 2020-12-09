@@ -332,6 +332,7 @@ def dataChanger2(humanperc, naturalperc):
     predict5 = predict[predict['Cause']== 'Natural']
     return predict, predict4, predict5
 
+@st.cache(allow_output_mutation=True)
 def predictPlot(predict3, predict4, flag, num):
     col1, col2 = area51.beta_columns((2,1))
     if flag == 1: 
@@ -357,6 +358,7 @@ def predictPlot(predict3, predict4, flag, num):
     col2.markdown(f'<img src="data:image/gif;base64,{data_url}" width="{num}" height="{num}" alt="fire gif">', unsafe_allow_html=True)
     col2.markdown('<b> Watch the fire proportionally decrease by your human-caused fire input </b>', unsafe_allow_html=True)
 
+@st.cache(allow_output_mutation=True)
 def predictCost(predict3, predict4, flag, num):
     col21, col22 = location2.beta_columns((2,1))
     if flag == 1: 
@@ -381,6 +383,7 @@ def predictCost(predict3, predict4, flag, num):
     col22.markdown(f'<img src="data:image/gif;base64,{data_url}" width="{num}" height="{num}" alt="fire gif">', unsafe_allow_html=True,)
     col22.markdown('<b> Watch the money proportionally decrease by your human-caused fire input </b>', unsafe_allow_html=True)
 
+@st.cache(allow_output_mutation=True)
 def render_predictions():
     st.title('Decrease the Impact')
     st.markdown("Use the inputs below to determine prediction")
