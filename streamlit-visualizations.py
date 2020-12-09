@@ -675,7 +675,7 @@ if __name__ == "__main__":
 
     add_selectbox = st.sidebar.selectbox(
     "Select Naviation Page",
-    ("Introduction", "Analysis", "Predictions")
+    ("Introduction", "Exploration", "Predictions")
     )
     
     if (add_selectbox == 'Introduction'):
