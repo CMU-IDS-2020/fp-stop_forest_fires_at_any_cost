@@ -272,7 +272,7 @@ def other_viz3():
     )
 
     type_radio = alt.binding_radio(options=types)
-    type_select = alt.selection_single(fields=['FIRETYPE'], bind=type_radio)
+    type_select = alt.selection_single(fields=['FIRETYPE'], bind=type_radio, name='Pick a ')
     type_color_condition = alt.condition(type_select,
                       alt.Color('FIRETYPE:N', legend=None),
                       alt.value('lightgray'))
