@@ -611,7 +611,7 @@ def render_slider(year):
     return year
 
 def showCount3(counter1, counter2):
-    col1, col2 = st.beta_columns(2)
+    col1, col2 = countLoc.beta_columns(2)
     col1.title('Acres Burned Clock')
     col1.markdown('Watch the clock as wildfires to see the rate of acres of land burned per second across the US')
     col1.title(f'{counter1}')
