@@ -146,65 +146,6 @@ def human_v_natural():
     st.subheader('1.4 Summary')
     st.write('Summary of findings')
 
-def other_viz():
-    result = get_bigData_cause(df5)
-    st.header('2. Insert Section Header Here')
-    st.subheader('2.1 Instructions')
-    st.write('Select a Year and State from the drop down menu.'),
-    #'The metrics displayed is the average fires by type and the protection types for the assigned Year and State')
-    st.write('')
-    Selector_year = list(result['YEAR_'].sort_values().unique())
-    Selector_state = list(result['STATE'].sort_values().unique())
-    box1 = st.selectbox('Years', Selector_year, key='box1')
-    box2 = st.selectbox('States', Selector_state, key='box2')
-
-    firetype_df = result.groupby(['YEAR_','STATE', 'FIRETYPE']).size().reset_index(name="firetype count")
-    firetype_df = firetype_df[firetype_df['YEAR_'].eq(box1)]
-    firetype_df = firetype_df[firetype_df['STATE'].eq(box2)]
-    firetype_df['Average'] = (firetype_df['firetype count'] / sum(firetype_df['firetype count']))
-    firetype_df['FIRETYPE'] = firetype_df['FIRETYPE'].replace(0, 'Action Fires/Supressed Fires')
-    firetype_df['FIRETYPE'] = firetype_df['FIRETYPE'].replace(1, 'Natural Out')
-    firetype_df['FIRETYPE'] = firetype_df['FIRETYPE'].replace(2, 'Support Action/Assist Fire')
-    firetype_df['FIRETYPE'] = firetype_df['FIRETYPE'].replace(3, 'Fire Management/Perscribed')
-    firetype_df['FIRETYPE'] = firetype_df['FIRETYPE'].replace(4, 'False Alarm')
-    firetype_df['FIRETYPE'] = firetype_df['FIRETYPE'].replace(5, 'Severe')
-
-    protection_df = result.groupby(['YEAR_','STATE', 'PROTECTION']).size().reset_index(name="protection count")
-    protection_df = protection_df[protection_df['YEAR_'].eq(box1)]
-    protection_df = protection_df[protection_df['STATE'].eq(box2)]
-    protection_df['Average'] = (protection_df['protection count'] / sum(protection_df['protection count']))
-
-    fire_type = alt.Chart(firetype_df).mark_bar(color='firebrick').encode(
-        x=alt.X('Average:Q', axis=alt.Axis(format='.0%')),
-        y='FIRETYPE:N',
-        #tooltip = [alt.Tooltip('Average:Q', title = f'FIRETYPE')]
-    ).properties(width = 300, height = 200, title = f'{box1}, {box2}')
-
-    text1 = fire_type.mark_text(
-    align='left',
-    baseline='middle',
-    dx=3  # Nudges text to right so it doesn't appear on top of the bar
-    ).encode(
-    text=('Average:Q')
-    )
-
-    protect = alt.Chart(protection_df).mark_bar().encode(
-        alt.X('Average:Q', axis=alt.Axis(format='.0%')),
-        y='PROTECTION:N'
-    ).properties(width = 300, height = 200, title = f'{box1}, {box2}')
-
-    text2 = protect.mark_text(
-    align='left',
-    baseline='middle',
-    dx=3  # Nudges text to right so it doesn't appear on top of the bar
-    ).encode(
-    text=('Average:Q')
-    )
-
-
-    fire_type + text1 | protect + text2
-
-
 def other_viz3():
     result = get_bigData_cause(df5)
 
@@ -646,8 +587,6 @@ if __name__ == "__main__":
         showCount4()
     elif(add_selectbox == 'Analysis'):
         sammys_viz()
-        other_viz()
-        other_viz2()
         other_viz3()
 
     elif(add_selectbox == 'Predictions'):
