@@ -5,3 +5,4 @@ numpy
 matplotlib
 vega
 plotly
+altair_viewer
