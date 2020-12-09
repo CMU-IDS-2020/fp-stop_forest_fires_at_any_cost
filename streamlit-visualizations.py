@@ -570,6 +570,48 @@ def sammys_viz():
         chart_1
         chart_2
 
+@st.cache
+def dataloader():
+	df = pd.read_csv('updated.csv')
+	return df
+
+def dataChanger(df, Year):
+	df = df[ df['Year'] == Year ]
+	return df
+
+def causePlots(x):
+	df1 = dataloader()
+	df = dataChanger(df1, x)
+	col1, col2, col3 = location1.beta_columns((2,1,1))
+	
+	#Map Image
+	col1.image(image_bank[x - 1980], width=1225)
+	
+    	#Create Pie Chart for Acres Burned
+    	human = df[df['Cause'] == 'Human']
+    	natural = df[df['Cause'] == 'Natural']
+   
+    	if human['BurnTime'].iloc[0] == 0 and natural['BurnTime'].iloc[0] == 0: 
+        	col2.markdown('Both human-caused and nature-caused fires average 0 days for this year')
+    	else: 
+        	fig = px.pie(df, values='BurnTime', names='Cause', title=f'Burn Days per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
+        	fig.update_layout(width=600,height=275)
+        	col2.plotly_chart(fig, width=600,height=275)
+
+		#create Pie Chart for Average Burn Time
+		fig2 = px.pie(df, values='Acres', names='Cause', title=f'Acres Burned per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
+		fig2.update_layout(width=600,height=275)
+		col2.plotly_chart(fig2, width=600,height=275)
+
+  		col3.title('Understanding Fire Trends by Cause')
+   		col3.markdown('View the side-by-side comparison of human-caused and naturally-caused fires from the years 1985 - 2019. Observe the changes in number of fires (seen on the map) versus burn days and acres burned. Consider the fact that the greater amount of burn days increase the length of time resources are expended to suppress a fire. Also consider that, as acres-burned grows, the ability of fire fighters to supppress a fire lessens.')
+
+def render_slider(year):
+	key = random.random() if animation_speed else None
+	year = sliderloc.slider("",min_value=1980, max_value=2016, key=key)
+	return year
+
+
 if __name__ == "__main__":
     st.set_page_config(layout="wide")
 
@@ -587,47 +629,7 @@ if __name__ == "__main__":
 	sliderloc = st.empty()
 	years_values = [year for year in range(1980, 2017)]
 	
-	#Preparing the DFs and aggregations for Pie Charts
-	@st.cache
-	def dataloader():
-	     df = pd.read_csv('updated.csv')
-	     return df
-
-	def dataChanger(df, Year):
-	     df = df[ df['Year'] == Year ]
-	     return df
-
-	def causePlots(x):
-	     df1 = dataloader()
-	     df = dataChanger(df1, x)
-	     col1, col2, col3 = location1.beta_columns((2,1,1))
-
-	     #Map Image
-	     col1.image(image_bank[x - 1980], width=1225)
-
-	     #Create Pie Chart for Acres Burned
-	     human = df[df['Cause'] == 'Human']
-	     natural = df[df['Cause'] == 'Natural']
-
-	     if human['BurnTime'].iloc[0] == 0 and natural['BurnTime'].iloc[0] == 0: 
-	          col2.markdown('Both human-caused and nature-caused fires average 0 days for this year')
-	     else: 
-		  fig = px.pie(df, values='BurnTime', names='Cause', title=f'Burn Days per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
-		  fig.update_layout(width=600,height=275)
-		  col2.plotly_chart(fig, width=600,height=275)
-
-	          #create Pie Chart for Average Burn Time
-	          fig2 = px.pie(df, values='Acres', names='Cause', title=f'Acres Burned per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
-		  fig2.update_layout(width=600,height=275)
-		  col2.plotly_chart(fig2, width=600,height=275)
-
-		  col3.title('Understanding Fire Trends by Cause')
-		  col3.markdown('View the side-by-side comparison of human-caused and naturally-caused fires from the years 1985 - 2019. Observe the changes in number of fires (seen on the map) versus burn days and acres burned. Consider the fact that the greater amount of burn days increase the length of time resources are expended to suppress a fire. Also consider that, as acres-burned grows, the ability of fire fighters to supppress a fire lessens.')
-
-	def render_slider(year):
-	     key = random.random() if animation_speed else None
-	     year = sliderloc.slider("",min_value=1980, max_value=2016, key=key)
-	     return year
+	
 
 	if buttLoc:
 	     if not buttLoc2:
