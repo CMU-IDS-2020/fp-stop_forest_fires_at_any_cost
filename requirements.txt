@@ -11,3 +11,6 @@ vega
 vega_datasets
 plotly
 mpl_toolkits
+seaborn
+itertools
+
