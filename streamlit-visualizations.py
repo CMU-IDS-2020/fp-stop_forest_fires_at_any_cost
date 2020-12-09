@@ -6,7 +6,6 @@ from vega_datasets import data
 import os, vega, time, random, base64
 import matplotlib.pyplot as plt
 import re
-from sklearn.impute import SimpleImputer
 from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import seaborn as sns
