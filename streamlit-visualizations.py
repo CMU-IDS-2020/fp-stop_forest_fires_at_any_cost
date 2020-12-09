@@ -375,7 +375,7 @@ def render_predictions():
 
 
 if __name__ == "__main__":
-    st.beta_set_page_config(layout="wide")
+    st.set_page_config(layout="wide")
 
     add_selectbox = st.sidebar.selectbox(
     "Select Naviation Page",
