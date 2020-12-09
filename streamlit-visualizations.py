@@ -610,6 +610,25 @@ def render_slider(year):
     year = sliderloc.slider("",min_value=1980, max_value=2016, key=key)
     return year
 
+def showCount3(counter1, counter2):
+    col1, col2 = countLoc.beta_columns(2)
+    col1.title('Acres Burned Clock')
+    col1.markdown('Watch the clock as wildfires to see the rate of acres of land burned per second across the US')
+    col1.title(f'{counter1}')
+    col2.title('Reforestation Clock')
+    col2.markdown('Watch the clock as humans attempt to reforest per second across the US')
+    col2.title(f'{counter2}')
+    
+def showCount4(): 
+    i2 = .15
+    count2 = 4700398
+    i = .30
+    count1 = 9500000
+    for number in range(1, 10000000):
+        count1 += i
+        count2 += i2
+        showCount3(count1, count2)
+        time.sleep(1)
 
 if __name__ == "__main__":
     st.set_page_config(layout="wide")
@@ -620,6 +639,8 @@ if __name__ == "__main__":
     )
     
     if (add_selectbox == 'Introduction'):
+	countLoc = st.empty()
+	showCount4()
         st.title('Map of Wildfires caused by Humans and Nature over time')
 	#buttLoc= st.button("Animate")
 	#buttLoc2= st.button("Stop Animate")
