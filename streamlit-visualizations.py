@@ -393,35 +393,34 @@ def render_predictions():
     return x, y 
 
 def sammys_viz():
-        df = load()
-        df_sig = load2()
-        df_main = load3()
+    df = load()
+    df_sig = load2()
+    df_main = load3()
 
-        states = alt.topo_feature(data.us_10m.url, 'states')
-        source = 'https://raw.githubusercontent.com/sammyhajomar/test/main/altair-dataset1.csv'
-        variables = ['State','acres','id']
+    states = alt.topo_feature(data.us_10m.url, 'states')
+    source = 'https://raw.githubusercontent.com/sammyhajomar/test/main/altair-dataset1.csv'
+    variables = ['State','acres','id']
 
-        # US states background
-        background = alt.Chart(states).mark_geoshape(
-            fill='lightgray',
-            stroke='white'
-        ).properties(
-            title='Wild Fires by State'
-        ).project('albersUsa'
-        ).properties(
+    # US states background
+    background = alt.Chart(states).mark_geoshape(
+                fill='lightgray',
+                stroke='white'
+                ).properties(
+                title='Wild Fires by State'
+                ).project('albersUsa'
+                ).properties(
                     width=800,
                     height=500
-        )
+                )
 
-        slider = alt.binding_range(min=1980, max=2016, step=1, name='Year')
+    slider = alt.binding_range(min=1980, max=2016, step=1, name='Year')
 
-        select_year = alt.selection_single(name="SelectorName", fields=['YEAR'],
+    select_year = alt.selection_single(name="SelectorName", fields=['YEAR'],
                                         bind=slider, init={'YEAR': 2000})
+    single = alt.selection_single(empty='all', fields=['CAUSE'])
 
-        single = alt.selection_single(empty='all', fields=['CAUSE'])
-
-        fire_points = alt.Chart(df).mark_circle(  
-            ).encode(
+    fire_points = alt.Chart(df).mark_circle(  
+                ).encode(
                 size=alt.Size("TOTALACRES:Q", title='Acres Burned', scale=alt.Scale(range=[0, 1000])),
                 longitude='DLONGITUDE:Q',
                 latitude='DLATITUDE:Q',
@@ -432,9 +431,9 @@ def sammys_viz():
                 select_year
             ).transform_filter(
                 select_year
-        )
+    )
 
-        chart_1 = alt.Chart(df).mark_line(point=True).encode(
+    chart_1 = alt.Chart(df).mark_line(point=True).encode(
                 alt.X('year(YEAR2):T',title='Year',scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=14,labelFontSize=14)),
                 alt.Y('sum(TOTALACRES):Q',title='Total Acres Burned', scale=alt.Scale(zero=False), axis=alt.Axis(titleFontSize=14,labelFontSize=14)),
                 color='CAUSE:N',
@@ -442,19 +441,19 @@ def sammys_viz():
             ).properties(
                 width=800,
                 height=300
-        )
+    )
 
-        chart_2 = alt.Chart(df).mark_line(point=True).encode(
+    chart_2 = alt.Chart(df).mark_line(point=True).encode(
                 alt.X('year(YEAR2):T',title='Year',scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=14,labelFontSize=14)),
                 alt.Y('sum(Days):Q',title='Total Number of Days per Fires', scale=alt.Scale(zero=False), axis=alt.Axis(titleFontSize=14,labelFontSize=14)),
                 color='CAUSE:N',
                 tooltip=[alt.Tooltip("YEAR2",title='Year'), alt.Tooltip('mean(Days)',title='Days of Fire', format=".2r")]
-            ).properties(
+    ).properties(
                 width=800,
                 height=300
-        )
+    )
 
-        chart_3 = alt.Chart(df).mark_bar().encode(
+    chart_3 = alt.Chart(df).mark_bar().encode(
                 alt.X('STATE',title='State', sort='-y'),
                 alt.Y('sum(TOTALACRES):Q',title='Acres Burned', axis=alt.Axis(format=',.4r')),
                 color=alt.Color('CAUSE:N'),
@@ -463,9 +462,9 @@ def sammys_viz():
                 select_year
             ).transform_filter(
                 select_year
-        )
+    )
 
-        US_map = alt.Chart(states).mark_geoshape().encode(
+    US_map = alt.Chart(states).mark_geoshape().encode(
                 color=alt.Color('acres:Q',title='Acreage Burned'),
                 tooltip=['State:N',alt.Tooltip('acres:Q',title='Total Acres Burned', format = ",.4r")]
             ).transform_lookup(
@@ -473,80 +472,80 @@ def sammys_viz():
                 from_=alt.LookupData(source,'id',variables),
             ).project(
                 type='albersUsa'
-        )
+    )
 
-        brush = alt.selection(type='interval', encodings=['x'])
+    brush = alt.selection(type='interval', encodings=['x'])
 
-        bar1 = alt.Chart(df_main).mark_bar().encode(
+    bar1 = alt.Chart(df_main).mark_bar().encode(
             x = alt.X('Year:O', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
             y = alt.Y('Total:Q', scale=alt.Scale(zero=False), title='Total Cost', axis=alt.Axis(titleFontSize=20,labelFontSize=14, format = "$,.6r")),
             opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.7)),
             tooltip=[alt.Tooltip("Total:Q",title='Total Cost', format="$,.4r"), alt.Tooltip("Year",title='Year')]
         ).add_selection(
             brush
-        )
+    )
 
-        rule1 = alt.Chart(df_main).mark_rule(color='red').encode(
+    rule1 = alt.Chart(df_main).mark_rule(color='red').encode(
                 y='mean(Total):Q',
                 size=alt.SizeValue(3)
             ).transform_filter(
                 brush
-        )
+    )
 
-        bar2 = alt.Chart(df_main).mark_bar().encode(
+    bar2 = alt.Chart(df_main).mark_bar().encode(
             x = alt.X('Year:O', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
             y = alt.Y('Acres:Q', scale=alt.Scale(zero=False), title='Acres Burned', axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
             opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.7)),
             tooltip=[alt.Tooltip("Acres",title='Acres Burned', format=",.6r"), alt.Tooltip("Year",title='Year')]
         ).add_selection(
             brush
-        )
+    )
 
-        rule2 = alt.Chart(df_main).mark_rule(color='red').encode(
+    rule2 = alt.Chart(df_main).mark_rule(color='red').encode(
             y='mean(Acres):Q',
             size=alt.SizeValue(3)
         ).transform_filter(
             brush
-        )
+    )
 
-        bar3 = alt.Chart(df_main).mark_bar().encode(
+    bar3 = alt.Chart(df_main).mark_bar().encode(
             x = alt.X('Year:O', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
             y = alt.Y('Fires:Q', scale=alt.Scale(zero=False), title='Number of Fires', axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
             opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.7)),
             tooltip=[alt.Tooltip("Fires",title='Number of Fires', format=",.4r"),alt.Tooltip("Year",title='Year')]
         ).add_selection(
             brush
-        )
+    )
 
-        rule3 = alt.Chart(df_main).mark_rule(color='red').encode(
+    rule3 = alt.Chart(df_main).mark_rule(color='red').encode(
             y='mean(Fires):Q',
             size=alt.SizeValue(3)
-        ).transform_filter(
+    ).transform_filter(
             brush
-        )
+    )
 
-        bar4 = alt.Chart(df_main).mark_bar().encode(
+    bar4 = alt.Chart(df_main).mark_bar().encode(
             x = alt.X('Year:O', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
             y = alt.Y('cost_per_acre:Q', scale=alt.Scale(zero=False), title='Cost per Acre', axis=alt.Axis(titleFontSize=20,labelFontSize=14, format = "$,.2r")),
             opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.7)),
             tooltip=[alt.Tooltip("cost_per_acre",title='Cost per Acre', format="$,.2r"),alt.Tooltip("Year",title='Year')]
         ).add_selection(
             brush
-        )
+    )
 
-        rule4 = alt.Chart(df_main).mark_rule(color='red').encode(
+     rule4 = alt.Chart(df_main).mark_rule(color='red').encode(
             y='mean(cost_per_acre):Q',
             size=alt.SizeValue(3)
         ).transform_filter(
             brush
-        )
+    )
 
-        slider1 = alt.binding_range(min=2006, max=2019, step=1, name='Year')
+    slider1 = alt.binding_range(min=2006, max=2019, step=1, name='Year')
 
-        select_year1 = alt.selection_single(name="SelectorName", fields=['Year'],
+    select_year1 = alt.selection_single(name="SelectorName", fields=['Year'],
                                         bind=slider1, init={'Year': 2006})
 
-        scatter = alt.Chart(df_sig).mark_circle(size=200
+    scatter = alt.Chart(df_sig).mark_circle(size=200
             ).encode(
                 x=alt.X('Days:Q', title='Days of Fire',scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
                 y=alt.Y('cost_per_acre:Q', title='Cost per Acre', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=20,labelFontSize=14,format="$,.2r")),
@@ -562,54 +561,54 @@ def sammys_viz():
                 select_year1
         )
 
-        scatter
-        (bar1 + rule1) & (bar2 + rule2) & (bar3 + rule3) & (bar4 + rule4)
-        map_chart = background + fire_points
-        map_chart
-        chart_3
-        chart_1
-        chart_2
+    scatter
+    (bar1 + rule1) & (bar2 + rule2) & (bar3 + rule3) & (bar4 + rule4)
+    map_chart = background + fire_points
+    map_chart
+    chart_3
+    chart_1
+    chart_2
 
 @st.cache
 def dataloader():
-	df = pd.read_csv('updated.csv')
-	return df
+    df = pd.read_csv('updated.csv')
+    return df
 
 def dataChanger(df, Year):
-	df = df[ df['Year'] == Year ]
-	return df
+    df = df[ df['Year'] == Year ]
+    return df
 
 def causePlots(x):
-	df1 = dataloader()
-	df = dataChanger(df1, x)
-	col1, col2, col3 = location1.beta_columns((2,1,1))
+    df1 = dataloader()
+    df = dataChanger(df1, x)
+    col1, col2, col3 = location1.beta_columns((2,1,1))
 	
-	#Map Image
-	col1.image(image_bank[x - 1980], width=1225)
+    #Map Image
+    col1.image(image_bank[x - 1980], width=1225)
 	
-    	#Create Pie Chart for Acres Burned
-    	human = df[df['Cause'] == 'Human']
-    	natural = df[df['Cause'] == 'Natural']
+    #Create Pie Chart for Acres Burned
+    human = df[df['Cause'] == 'Human']
+    natural = df[df['Cause'] == 'Natural']
    
-    	if human['BurnTime'].iloc[0] == 0 and natural['BurnTime'].iloc[0] == 0: 
-        	col2.markdown('Both human-caused and nature-caused fires average 0 days for this year')
-    	else: 
-        	fig = px.pie(df, values='BurnTime', names='Cause', title=f'Burn Days per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
-        	fig.update_layout(width=600,height=275)
-        	col2.plotly_chart(fig, width=600,height=275)
+    if human['BurnTime'].iloc[0] == 0 and natural['BurnTime'].iloc[0] == 0: 
+        col2.markdown('Both human-caused and nature-caused fires average 0 days for this year')
+    else: 
+        fig = px.pie(df, values='BurnTime', names='Cause', title=f'Burn Days per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
+        fig.update_layout(width=600,height=275)
+        col2.plotly_chart(fig, width=600,height=275)
 
-		#create Pie Chart for Average Burn Time
-		fig2 = px.pie(df, values='Acres', names='Cause', title=f'Acres Burned per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
-		fig2.update_layout(width=600,height=275)
-		col2.plotly_chart(fig2, width=600,height=275)
+        #create Pie Chart for Average Burn Time
+        fig2 = px.pie(df, values='Acres', names='Cause', title=f'Acres Burned per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
+        fig2.update_layout(width=600,height=275)
+        col2.plotly_chart(fig2, width=600,height=275)
 
-  		col3.title('Understanding Fire Trends by Cause')
-   		col3.markdown('View the side-by-side comparison of human-caused and naturally-caused fires from the years 1985 - 2019. Observe the changes in number of fires (seen on the map) versus burn days and acres burned. Consider the fact that the greater amount of burn days increase the length of time resources are expended to suppress a fire. Also consider that, as acres-burned grows, the ability of fire fighters to supppress a fire lessens.')
+        col3.title('Understanding Fire Trends by Cause')
+        col3.markdown('View the side-by-side comparison of human-caused and naturally-caused fires from the years 1985 - 2019. Observe the changes in number of fires (seen on the map) versus burn days and acres burned. Consider the fact that the greater amount of burn days increase the length of time resources are expended to suppress a fire. Also consider that, as acres-burned grows, the ability of fire fighters to supppress a fire lessens.')
 
 def render_slider(year):
-	key = random.random() if animation_speed else None
-	year = sliderloc.slider("",min_value=1980, max_value=2016, key=key)
-	return year
+    key = random.random() if animation_speed else None
+    year = sliderloc.slider("",min_value=1980, max_value=2016, key=key)
+    return year
 
 
 if __name__ == "__main__":
@@ -628,19 +627,16 @@ if __name__ == "__main__":
 	location1 = st.empty()
 	sliderloc = st.empty()
 	years_values = [year for year in range(1980, 2017)]
-	
-	
-
-	if buttLoc:
-	     if not buttLoc2:
-	          for year in cycle(years_values):
-		        animation_speed= .4
-			time.sleep(animation_speed)
-			render_slider(year)
-			causePlots(year)
-	     else:
-	           year = render_slider(1980)
-		   causePlots(year)
+        if buttLoc:
+            if not buttLoc2:
+                for year in cycle(years_values):
+                    animation_speed= .4
+                    time.sleep(animation_speed)
+                    render_slider(year)
+                    causePlots(year)
+            else:
+                year = render_slider(1980)
+                causePlots(year)
     elif(add_selectbox == 'Analysis'):
         sammys_viz()
         other_viz()
