@@ -13,6 +13,18 @@ from datetime import datetime
 import plotly.express as px
 from itertools import cycle
 
+#Preparing Map Images
+image_bank = ['image_1.png', 'image_2.png', 'image_3.png', 'image_4.png', 
+	      'image_5.png', 'image_6.png', 'image_7.png', 'image_8.png', 
+	      'image_9.png', 'image_10.png', 'image_11.png', 'image_12.png', 
+	      'image_13.png', 'image_14.png', 'image_15.png', 'image_16.png', 
+	      'image_17.png', 'image_18.png', 'image_19.png', 'image_20.png', 
+	      'image_21.png', 'image_22.png', 'image_23.png', 
+	      'image_24.png', 'image_25.png', 'image_26.png', 'image_27.png',
+	      'image_28.png', 'image_29.png', 'image_30.png', 'image_31.png',  
+	      'image_32.png', 'image_33.png', 'image_34.png', 'image_35.png', 
+	      'image_36.png', 'image_37.png']
+
 ####DATA#####
 df = pd.read_excel('Data.xlsx')
 df1 = pd.read_excel('Data.xlsx',3)
@@ -47,7 +59,6 @@ def load2():
 def load3():
 	df = pd.read_excel('Data.xlsx')
 	df['cost_per_acre'] = df['Total']/df['Acres']
-
 	return df
 
 #Data processing for the Cost Predictor Model
@@ -568,78 +579,66 @@ if __name__ == "__main__":
     )
     
     if (add_selectbox == 'Introduction'):
-		st.title('Map of Wildfires caused by Humans and Nature over Time')
-		buttLoc= st.button("Animate")
-		buttLoc2= st.button("Stop Animate")
-		animation_speed = None
-		location1 = st.empty()
-		sliderloc = st.empty()
-		years_values = [year for year in range(1980, 2017)]
-		#Preparing Map Images
-		image_bank = ['image_1.png', 'image_2.png', 'image_3.png', 'image_4.png', 
-		      'image_5.png', 'image_6.png', 'image_7.png', 'image_8.png', 
-		      'image_9.png', 'image_10.png', 'image_11.png', 'image_12.png', 
-		      'image_13.png', 'image_14.png', 'image_15.png', 'image_16.png', 
-		      'image_17.png', 'image_18.png', 'image_19.png', 'image_20.png', 
-		      'image_21.png', 'image_22.png', 'image_23.png', 
-		      'image_24.png', 'image_25.png', 'image_26.png', 'image_27.png',
-		      'image_28.png', 'image_29.png', 'image_30.png', 'image_31.png',  
-		      'image_32.png', 'image_33.png', 'image_34.png', 'image_35.png', 
-		      'image_36.png', 'image_37.png']
-		#Preparing the DFs and aggregations for Pie Charts
-		@st.cache
-		def dataloader():
-	    		df = pd.read_csv('updated.csv')
-	    		return df
+	st.title('Map of Wildfires caused by Humans and Nature over Time')
+	buttLoc= st.button("Animate")
+	buttLoc2= st.button("Stop Animate")
+	animation_speed = None
+	location1 = st.empty()
+	sliderloc = st.empty()
+	years_values = [year for year in range(1980, 2017)]
+	
+	#Preparing the DFs and aggregations for Pie Charts
+	@st.cache
+	def dataloader():
+	     df = pd.read_csv('updated.csv')
+	     return df
 
-		def dataChanger(df, Year):
-		    df = df[ df['Year'] == Year ]
-		    # newdata = df.groupby(['Year', 'Cause'], as_index=False)[['BurnTime', 'Acres']].sum(numeric_only=False)
-		    return df
+	def dataChanger(df, Year):
+	     df = df[ df['Year'] == Year ]
+	     return df
 
-		def causePlots(x):
-		    df1 = dataloader()
-		    df = dataChanger(df1, x)
-		    col1, col2, col3 = location1.beta_columns((2,1,1))
+	def causePlots(x):
+	     df1 = dataloader()
+	     df = dataChanger(df1, x)
+	     col1, col2, col3 = location1.beta_columns((2,1,1))
 
-		    #Map Image
-		    col1.image(image_bank[x - 1980], width=1225)
+	     #Map Image
+	     col1.image(image_bank[x - 1980], width=1225)
 
-		    #Create Pie Chart for Acres Burned
-		    human = df[df['Cause'] == 'Human']
-		    natural = df[df['Cause'] == 'Natural']
+	     #Create Pie Chart for Acres Burned
+	     human = df[df['Cause'] == 'Human']
+	     natural = df[df['Cause'] == 'Natural']
 
-		    if human['BurnTime'].iloc[0] == 0 and natural['BurnTime'].iloc[0] == 0: 
-			col2.markdown('Both human-caused and nature-caused fires average 0 days for this year')
-		    else: 
-			fig = px.pie(df, values='BurnTime', names='Cause', title=f'Burn Days per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
-			fig.update_layout(width=600,height=275)
-			col2.plotly_chart(fig, width=600,height=275)
+	     if human['BurnTime'].iloc[0] == 0 and natural['BurnTime'].iloc[0] == 0: 
+	          col2.markdown('Both human-caused and nature-caused fires average 0 days for this year')
+	     else: 
+		  fig = px.pie(df, values='BurnTime', names='Cause', title=f'Burn Days per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
+		  fig.update_layout(width=600,height=275)
+		  col2.plotly_chart(fig, width=600,height=275)
 
-		    #create Pie Chart for Average Burn Time
-		    fig2 = px.pie(df, values='Acres', names='Cause', title=f'Acres Burned per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
-		    fig2.update_layout(width=600,height=275)
-		    col2.plotly_chart(fig2, width=600,height=275)
+	          #create Pie Chart for Average Burn Time
+	          fig2 = px.pie(df, values='Acres', names='Cause', title=f'Acres Burned per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
+		  fig2.update_layout(width=600,height=275)
+		  col2.plotly_chart(fig2, width=600,height=275)
 
-		    col3.title('Understanding Fire Trends by Cause')
-		    col3.markdown('View the side-by-side comparison of human-caused and naturally-caused fires from the years 1985 - 2019. Observe the changes in number of fires (seen on the map) versus burn days and acres burned. Consider the fact that the greater amount of burn days increase the length of time resources are expended to suppress a fire. Also consider that, as acres-burned grows, the ability of fire fighters to supppress a fire lessens.')
+		  col3.title('Understanding Fire Trends by Cause')
+		  col3.markdown('View the side-by-side comparison of human-caused and naturally-caused fires from the years 1985 - 2019. Observe the changes in number of fires (seen on the map) versus burn days and acres burned. Consider the fact that the greater amount of burn days increase the length of time resources are expended to suppress a fire. Also consider that, as acres-burned grows, the ability of fire fighters to supppress a fire lessens.')
 
-		def render_slider(year):
-		    key = random.random() if animation_speed else None
-		    year = sliderloc.slider("",min_value=1980, max_value=2016, key=key)
-		    return year
+	def render_slider(year):
+	     key = random.random() if animation_speed else None
+	     year = sliderloc.slider("",min_value=1980, max_value=2016, key=key)
+	     return year
 
-		if buttLoc:
-		    if not buttLoc2:
-			for year in cycle(years_values):
-			    animation_speed= .4
-			    time.sleep(animation_speed)
-			    render_slider(year)
-			    causePlots(year)
-		else:
-		    year = render_slider(1980)
-		    causePlots(year)
-		
+	if buttLoc:
+	     if not buttLoc2:
+	          for year in cycle(years_values):
+		        animation_speed= .4
+			time.sleep(animation_speed)
+			render_slider(year)
+			causePlots(year)
+	     else:
+	           year = render_slider(1980)
+		   causePlots(year)
     elif(add_selectbox == 'Analysis'):
         sammys_viz()
         other_viz()
