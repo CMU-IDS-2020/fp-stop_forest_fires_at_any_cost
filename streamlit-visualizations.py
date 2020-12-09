@@ -624,7 +624,7 @@ def showCount4():
     count2 = 4700398
     i = .30
     count1 = 9500000
-    for number in range(1, 1000):
+    for number in range(1, 10):
         count1 += i
         count2 += i2
         showCount3(count1, count2)
@@ -642,14 +642,14 @@ if __name__ == "__main__":
         countLoc = st.empty()
         showCount4()
         st.title('Map of Wildfires caused by Humans and Nature over time')
-	#buttLoc= st.button("Animate")
-	#buttLoc2= st.button("Stop Animate")
+        buttLoc= st.button("Animate")
+        buttLoc2= st.button("Stop Animate")
         animation_speed = None
         location1 = st.empty()
         sliderloc = st.empty()
         years_values = [year for year in range(1980, 2017)]
-        if st.button("Animate"):
-            if not st.button("Stop Animate"):
+        if buttLoc:
+            if not buttLoc2:
                 for year in cycle(years_values):
                     animation_speed= .4
                     time.sleep(animation_speed)
