@@ -31,7 +31,7 @@ df1 = pd.read_excel('Data.xlsx',3)
 df2 = pd.read_csv('significant-fires_2005-2019.csv')
 df3 = pd.read_csv('Perscribed_Fires.csv')
 df4 = pd.read_csv('acres_merged_prediction_results.csv')
-df5 = pd.read_csv('predict_raw.zip')
+df5 = pd.read_csv('predict_raw.csv')
 
 ####DATA TRANSFORMATION / DATA QUERIES#####
 @st.cache
@@ -678,7 +678,7 @@ if __name__ == "__main__":
         human, natural = render_predictions()
         st.title('Human vs. Natural Cost Predictions')
         location2 = st.empty()
-	if human == 0 and natural == 0:
+        if human == 0 and natural == 0:
             df, predict3, predict4 = dataLoader2()
             flag = 1
             num = 0
