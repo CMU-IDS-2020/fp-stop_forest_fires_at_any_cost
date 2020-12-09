@@ -20,7 +20,7 @@ df1 = pd.read_excel('Data.xlsx',3)
 df2 = pd.read_csv('significant-fires_2005-2019.csv')
 df3 = pd.read_csv('Perscribed_Fires.csv')
 df4 = pd.read_csv('acres_merged_prediction_results.csv')
-df5 = pd.read_csv('predict_raw.csv')
+df5 = pd.read_csv('predict_raw.zip')
 
 ####DATA TRANSFORMATION / DATA QUERIES#####
 
