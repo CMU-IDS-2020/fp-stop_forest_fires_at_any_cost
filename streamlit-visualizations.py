@@ -36,30 +36,30 @@ df5 = pd.read_csv('predict_raw.zip')
 ####DATA TRANSFORMATION / DATA QUERIES#####
 @st.cache
 def load():
- 	df = pd.read_csv('fire_data.csv')
- 	df['YEAR2'] = pd.to_datetime(df['YEAR'],format='%Y')
- 	df['STARTDATED'] = pd.to_datetime(df['STARTDATED'],errors='coerce')
- 	df['CONTRDATED'] = pd.to_datetime(df['CONTRDATED'],errors='coerce')
- 	df['Days'] = (df['CONTRDATED'] - df['STARTDATED']).dt.days
- 	return df
+    df = pd.read_csv('fire_data.csv')
+    df['YEAR2'] = pd.to_datetime(df['YEAR'],format='%Y')
+    df['STARTDATED'] = pd.to_datetime(df['STARTDATED'],errors='coerce')
+    df['CONTRDATED'] = pd.to_datetime(df['CONTRDATED'],errors='coerce')
+    df['Days'] = (df['CONTRDATED'] - df['STARTDATED']).dt.days
+    return df
 
 @st.cache
 def load2():
-	df = pd.read_excel('Data.xlsx',3)
-	df['cost_per_acre'] = (df['Estimated Cost']/df['Acres'])
-	df['Start Date'] = pd.to_datetime(df['Start Date'], errors='coerce')
-	df['Contain or Last Report Date'] = pd.to_datetime(df['Contain or Last Report Date'],errors='coerce')
-	df['Days'] = (df['Contain or Last Report Date'] - df['Start Date']).dt.days
-	df = df[(df['Days'] > 0) & (df['cost_per_acre'] > 0)]
-	df = df[(df['Cause'] == 'L') | (df['Cause'] == 'H')]
-	df['Cause'].replace({'H':'Human','L':'Natural'}, inplace=True)
-	return df
+    df = pd.read_excel('Data.xlsx',3)
+    df['cost_per_acre'] = (df['Estimated Cost']/df['Acres'])
+    df['Start Date'] = pd.to_datetime(df['Start Date'], errors='coerce')
+    df['Contain or Last Report Date'] = pd.to_datetime(df['Contain or Last Report Date'],errors='coerce')
+    df['Days'] = (df['Contain or Last Report Date'] - df['Start Date']).dt.days
+    df = df[(df['Days'] > 0) & (df['cost_per_acre'] > 0)]
+    df = df[(df['Cause'] == 'L') | (df['Cause'] == 'H')]
+    df['Cause'].replace({'H':'Human','L':'Natural'}, inplace=True)
+    return df
 
 @st.cache
 def load3():
-	df = pd.read_excel('Data.xlsx')
-	df['cost_per_acre'] = df['Total']/df['Acres']
-	return df
+    df = pd.read_excel('Data.xlsx')
+    df['cost_per_acre'] = df['Total']/df['Acres']
+    return df
 
 #Data processing for the Cost Predictor Model
 #Not to be used for visualizations
