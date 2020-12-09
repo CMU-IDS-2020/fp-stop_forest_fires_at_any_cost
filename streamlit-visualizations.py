@@ -10,7 +10,7 @@ from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.pyplot as plt
 import numpy as np
 from datetime import datetime 
-#import plotly.express as px
+import plotly.express as px
 from itertools import cycle
 
 ####DATA#####
