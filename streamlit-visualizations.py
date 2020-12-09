@@ -204,63 +204,6 @@ def other_viz():
 
     fire_type + text1 | protect + text2
 
-def other_viz2():
-    result = get_bigData_cause(df5)
-
-    Selector_year = list(result['YEAR_'].sort_values().unique())
-    box3 = st.selectbox('Years', Selector_year, key='box3')
-
-    firetype_df2 = result.groupby(['YEAR_','FIRETYPE']).size().reset_index(name="Firetype Count")
-    firetype_df2['FIRETYPE'] = firetype_df2['FIRETYPE'].replace(0, 'Action Fires/Supressed Fires')
-    firetype_df2['FIRETYPE'] = firetype_df2['FIRETYPE'].replace(1, 'Natural Out')
-    firetype_df2['FIRETYPE'] = firetype_df2['FIRETYPE'].replace(2, 'Support Action/Assist Fire')
-    firetype_df2['FIRETYPE'] = firetype_df2['FIRETYPE'].replace(3, 'Fire Management/Perscribed')
-    firetype_df2['FIRETYPE'] = firetype_df2['FIRETYPE'].replace(4, 'False Alarm')
-    firetype_df2['FIRETYPE'] = firetype_df2['FIRETYPE'].replace(5, 'Severe')
-
-    protection_df2 = result.groupby(['YEAR_','PROTECTION']).size().reset_index(name="protection count")
-    # protection_df2['PROTECTION'] = protection_df2['PROTECTION'].replace('1', 'Closed Season')
-    # protection_df2['PROTECTION'] = protection_df2['PROTECTION'].replace('2', 'Partial Hootowl')
-    # protection_df2['PROTECTION'] = protection_df2['PROTECTION'].replace('3', 'Partial Shutdown')
-    # protection_df2['PROTECTION'] = protection_df2['PROTECTION'].replace('4', 'General Shutdown')
-    protection_df2['Average'] = (protection_df2['protection count'] / sum(protection_df2['protection count']))
-    protection_df2 = protection_df2[protection_df2['YEAR_'].eq(box3)]
-    
-    fire_total = alt.Chart(firetype_df2).mark_circle(
-    opacity=0.8,
-    stroke='black',
-    strokeWidth=1
-    ).encode(
-    alt.X('YEAR_:O', axis=alt.Axis(labelAngle=45), title = 'Year'),
-    alt.Y('FIRETYPE:N', title = 'Types of Fire'),
-    alt.Size('Firetype Count:Q',
-        scale=alt.Scale(range=[0, 1000]),
-        legend = None
-    ),
-    alt.Color('FIRETYPE:N', legend=None),
-    alt.Tooltip(['Firetype Count:Q', 'YEAR_']),
-    ).properties(width=700, height=450, title ='Annual Count of Fires by Type')
-
-    protect_total = alt.Chart(protection_df2).mark_bar(color='orange').encode(
-        alt.X('Average:Q', axis=alt.Axis(format='.0%')),
-        y='PROTECTION:N'
-    ).properties(width = 300, height = 300, title = f'{box3}, National Statistics')
-
-    text4 = protect_total.mark_text(
-    align='left',
-    baseline='middle',
-    dx=3  # Nudges text to right so it doesn't appear on top of the bar
-    ).encode(
-    text=('Average:Q')
-    )
-
-    st.write('Instructions:')
-    fire_total | (protect_total + text4)
-    st.subheader('2.2 Definitions')
-    st.write('2.2.1 Definition of Firetype')
-    st.write('2.2.2 Definition of protection levels')
-    st.subheader('2.3 Summary')
-    st.write('Summary of findings')
 
 def other_viz3():
     result = get_bigData_cause(df5)
