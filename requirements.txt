@@ -6,3 +6,4 @@ matplotlib
 vega
 plotly
 altair_viewer
+vega_datasets
