@@ -13,4 +13,4 @@ mpl_toolkits
 seaborn
 itertools
 plotly
-plotly_express
+plotly.express
