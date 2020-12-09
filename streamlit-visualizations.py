@@ -634,9 +634,9 @@ if __name__ == "__main__":
                     time.sleep(animation_speed)
                     render_slider(year)
                     causePlots(year)
-            else:
-                year = render_slider(1980)
-                causePlots(year)
+	else:
+            year = render_slider(1980)
+            causePlots(year)
     elif(add_selectbox == 'Analysis'):
         sammys_viz()
         other_viz()
