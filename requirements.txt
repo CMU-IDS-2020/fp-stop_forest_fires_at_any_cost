@@ -1,12 +1,7 @@
 streamlit
 altair
 pandas
-xlrd
 numpy
-scipy
-statsmodels
 matplotlib
 vega
-mpl_toolkits
-seaborn
-plotly.express
+plotly
