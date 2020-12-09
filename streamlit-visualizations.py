@@ -634,6 +634,42 @@ def showCount4():
         showCount3(count1, count2)
         time.sleep(1)
 
+
+def reforestationInputs(): 
+    st.title('Change your Impact')
+    st.markdown("Use the inputs below to catch deforestation rates with increased reforestation efforts")
+    human_input = st.text_input('Enter a number to increase millions of acres reforested per year:')
+    if human_input == '':
+        human_input = 0
+    try: 
+        x= int(human_input)
+    except: 
+        x = 0
+    return x
+
+def displayForest(count1, count2):
+    col1, col2 = reforestLoc.beta_columns(2)
+    col1.title('Acres Burned Clock')
+    col1.markdown('Watch the clock as wildfires to see the rate of acres of land burned per second across the US')
+    col1.title(f'{count1}')
+    col2.title('Reforestation Clock')
+    col2.markdown('Watch the clock as humans attempt to reforest per second across the US')
+    col2.title(f'{count2}')
+
+def showCountForest(reforest): 
+    i = .30
+    count1 = 9500000
+    count2 = 4700398
+    if reforest == 0: 
+        i2 = .158
+    else: 
+        i2 = ((((5000000 + reforest)/365)/24)/60)/60
+    for number in range(1, 10000000):
+        count1 += i
+        count2 += i2
+        displayForest(count1, count2)
+        time.sleep(1)
+
 if __name__ == "__main__":
     st.set_page_config(layout="wide")
 
@@ -688,5 +724,8 @@ if __name__ == "__main__":
             num = human/100
         predictPlot(predict3, predict4, flag, num)
         predictCost(predict3, predict4, flag, num)
+        reforestLoc = st.empty()
+        reforest = reforestationInputs()
+        showCountForest(reforest)
         display_pred_code()
    
