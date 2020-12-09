@@ -254,8 +254,7 @@ def other_viz2():
 def other_viz3():
     result = get_bigData_cause(df5)
 
-    types = ['Action Fires/Supressed Fires', 'Natural Out', 'Support Action/Assist Fire', 
-                'Fire Management/Perscribed', 'False Alarm', 'Severe']
+    types = ['Action Fires/Supressed Fires', 'Natural Out', 'Support Action/Assist Fire', 'Fire Management/Perscribed', 'False Alarm', 'Severe']
 
     firetype_df2 = result.groupby(['YEAR_','FIRETYPE']).size().reset_index(name="Firetype Count")
     firetype_df2['FIRETYPE'] = firetype_df2['FIRETYPE'].replace(0, 'Action Fires/Supressed Fires')
