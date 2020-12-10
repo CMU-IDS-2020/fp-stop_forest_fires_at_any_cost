@@ -25,6 +25,8 @@ image_bank = ['image_1.png', 'image_2.png', 'image_3.png', 'image_4.png',
 	      'image_32.png', 'image_33.png', 'image_34.png', 'image_35.png', 
 	      'image_36.png', 'image_37.png']
 
+st.set_page_config(layout="wide")
+
 ####DATA#####
 df = pd.read_excel('Data.xlsx')
 df1 = pd.read_excel('Data.xlsx',3)
@@ -654,7 +656,7 @@ def showCountForest(reforest):
         time.sleep(1)
 
 if __name__ == "__main__":
-    st.set_page_config(layout="wide")
+    #st.set_page_config(layout="wide")
 
     add_selectbox = st.sidebar.selectbox(
     "Select Naviation Page",
