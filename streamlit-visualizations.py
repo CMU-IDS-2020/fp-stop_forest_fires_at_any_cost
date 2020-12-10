@@ -606,8 +606,8 @@ if __name__ == "__main__":
             num = human/100
         predictPlot(predict3, predict4, flag, num)
         predictCost(predict3, predict4, flag, num)
-	display_pred_code()
-	st.write('While we may assign a budget to suppress wildfires more quickly, these actions alone will not reduce the negative effects of wildfires on our climate. Below are the Acres-Burned and Reforestation Clocks. Right now, the reforestation clock is running behind, but all of us together can speed it up.')
+        display_pred_code()
+        st.write('While we may assign a budget to suppress wildfires more quickly, these actions alone will not reduce the negative effects of wildfires on our climate. Below are the Acres-Burned and Reforestation Clocks. Right now, the reforestation clock is running behind, but all of us together can speed it up.')
         reforestLoc = st.empty()
         reforest = reforestationInputs()
         showCountForest(reforest)
