@@ -684,7 +684,7 @@ if __name__ == "__main__":
             causePlots(year)
         st.subheader('While we may assign a budget to suppress wildfires more quickly, these actions alone will not reduce the negative effects of wildfires on our climate. Below are the Acres-Burned and Reforestation Clocks. Right now, the reforestation clock is running behind, but all of us together can speed it up.')
         st.subheader('The clocks below show the acres-burned by wildfires so far this year with the rate of acres-burned proportionate to the number of predicted acres still to burn for 2020. The rate of reforestation is a similar measure of the acres of trees planted so far in 2020 with the rate of increase per second indicating hoe many trees are still predicted to be planted throughout the remainder of the year.')
-	reforestLoc = st.empty()
+        reforestLoc = st.empty()
         reforest = reforestationInputs()
         showCountForest(reforest)
     elif(add_selectbox == 'Exploration'):
