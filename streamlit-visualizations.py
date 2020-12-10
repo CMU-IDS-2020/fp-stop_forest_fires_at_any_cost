@@ -685,7 +685,7 @@ if __name__ == "__main__":
         showCount4()
     elif(add_selectbox == 'Exploration'):
         sammys_viz()
-        other_viz3()
+        other_viz3(result)
 
     elif(add_selectbox == 'Predictions'):
         st.title('Time Series Forecasting: Future Acres Burned and Furure Cost of Suppression')
