@@ -588,8 +588,8 @@ if __name__ == "__main__":
 
     elif(add_selectbox == 'Predictions'):
         st.title('Time Series Forecasting: Future Acres Burned and Furure Cost of Suppression')
-        st.markdown('## Below you can see the forecasting results of a time series analysis on acres burned from both naturally-caused and human-caused fires. Our model projects five years out from the conclusion of the dataset. Evidently, fires are on the rise. Perhaps shockingly, fires caused by humans are not comparable to those caused by nature. This is likely due to climate change inciting longer dry spells and increasing the length of time for which our nation is at risk for wild fires. As the nation looks into the future, we need to prepare for these rising fire-counts, as well as their subsequent suppression costs. Based on these metrics, we must start to consider what kind of influence we can have on these predictions. Was Smokey Bear right? Are we the only ones who can prevent wildfires?')
-        st.markdown('## Inspired by this mantra, explore the predictor model below to investigate for yourself. If we were able to reduce human-caused fires by 30% how many acres would still burn? How much would it cost? ')
+        st.write('Below you can see the forecasting results of a time series analysis on acres burned from both naturally-caused and human-caused fires. Our model projects five years out from the conclusion of the dataset. Evidently, fires are on the rise. Perhaps shockingly, fires caused by humans are not comparable to those caused by nature. This is likely due to climate change inciting longer dry spells and increasing the length of time for which our nation is at risk for wild fires. As the nation looks into the future, we need to prepare for these rising fire-counts, as well as their subsequent suppression costs. Based on these metrics, we must start to consider what kind of influence we can have on these predictions. Was Smokey Bear right? Are we the only ones who can prevent wildfires?')
+        st.write('Inspired by this mantra, explore the predictor model below to investigate for yourself. If we were able to reduce human-caused fires by 30% how many acres would still burn? How much would it cost? ')
         st.title('Human vs. Natural Fire Predictions')
         other = st.empty()
         area51 = st.empty()
@@ -606,8 +606,9 @@ if __name__ == "__main__":
             num = human/100
         predictPlot(predict3, predict4, flag, num)
         predictCost(predict3, predict4, flag, num)
+	display_pred_code()
+	st.write('While we may assign a budget to suppress wildfires more quickly, these actions alone will not reduce the negative effects of wildfires on our climate. Below are the Acres-Burned and Reforestation Clocks. Right now, the reforestation clock is running behind, but all of us together can speed it up.')
         reforestLoc = st.empty()
         reforest = reforestationInputs()
         showCountForest(reforest)
-        display_pred_code()
    
