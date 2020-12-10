@@ -294,7 +294,7 @@ def sammys_viz():
                 fill='lightgray',
                 stroke='white'
                 ).properties(
-                title='Wild Fires by State'
+                title='Figure 11: Wild Fires by State'
                 ).project('albersUsa'
                 ).properties(
                     width=800,
@@ -322,38 +322,42 @@ def sammys_viz():
     )
 
     chart_1 = alt.Chart(df).mark_line(point=True).encode(
-                alt.X('year(YEAR2):T',title='Year',scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=14,labelFontSize=14)),
-                alt.Y('sum(TOTALACRES):Q',title='Total Acres Burned', scale=alt.Scale(zero=False), axis=alt.Axis(titleFontSize=14,labelFontSize=14)),
+                alt.X('year(YEAR2):T',title='Year',scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=18,labelFontSize=14)),
+                alt.Y('sum(TOTALACRES):Q',title='Total Acres Burned', scale=alt.Scale(zero=False), axis=alt.Axis(titleFontSize=18,labelFontSize=14)),
                 color='CAUSE:N',
                 tooltip=[alt.Tooltip("YEAR2",title='Year'), alt.Tooltip('mean(TOTALACRES)',title='Acres Burned', format=",.4r")]
             ).properties(
-                width=800,
-                height=300
+                width=550,
+                height=300,
+                title="Figure 9: Total acres burned per year from 1980 to 2016"
     )
 
     chart_2 = alt.Chart(df).mark_line(point=True).encode(
-                alt.X('year(YEAR2):T',title='Year',scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=14,labelFontSize=14)),
+                alt.X('year(YEAR2):T',title='Year',scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=18,labelFontSize=14)),
                 alt.Y('sum(Days):Q',title='Total Number of Days per Fires', scale=alt.Scale(zero=False), axis=alt.Axis(titleFontSize=14,labelFontSize=14)),
                 color='CAUSE:N',
                 tooltip=[alt.Tooltip("YEAR2",title='Year'), alt.Tooltip('mean(Days)',title='Days of Fire', format=".2r")]
     ).properties(
-                width=800,
-                height=300
+                width=550,
+                height=300,
+                title="Figure 10: Total number of days of fires per year from 1980 to 2016"
     )
 
     chart_3 = alt.Chart(df).mark_bar().encode(
-                alt.X('STATE',title='State', sort='-y'),
-                alt.Y('sum(TOTALACRES):Q',title='Acres Burned', axis=alt.Axis(format=',.4r')),
+                alt.X('STATE',title='State', sort='-y', axis=alt.Axis(titleFontSize=18,labelFontSize=14)),
+                alt.Y('sum(TOTALACRES):Q',title='Acres Burned', axis=alt.Axis(titleFontSize=14,labelFontSize=14, format=',.4r')),
                 color=alt.Color('CAUSE:N'),
                 tooltip=[alt.Tooltip("CAUSE",title='Cause'), alt.Tooltip('sum(TOTALACRES)',title='Acres Burned', format=",.4r")]
             ).add_selection(
                 select_year
             ).transform_filter(
                 select_year
+            ).properties(
+                title="Figure 12: Acres burned by state (cause breakdown)"
     )
 
     US_map = alt.Chart(states).mark_geoshape().encode(
-                color=alt.Color('acres:Q',title='Acreage Burned'),
+                color=alt.Color('acres:Q',title='Acreage Burned', axis=alt.Axis(titleFontSize=18,labelFontSize=14)),
                 tooltip=['State:N',alt.Tooltip('acres:Q',title='Total Acres Burned', format = ",.4r")]
             ).transform_lookup(
                 lookup='id',
@@ -365,28 +369,35 @@ def sammys_viz():
     brush = alt.selection(type='interval', encodings=['x'])
 
     bar1 = alt.Chart(df_main).mark_bar().encode(
-            x = alt.X('Year:O', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
-            y = alt.Y('Total:Q', scale=alt.Scale(zero=False), title='Total Cost', axis=alt.Axis(titleFontSize=20,labelFontSize=14, format = "$,.6r")),
+            x = alt.X('Year:O', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=18,labelFontSize=14)),
+            y = alt.Y('cost_thousands:Q', scale=alt.Scale(zero=False), title='Suppression Cost (Millions)', axis=alt.Axis(titleFontSize=20,labelFontSize=14, format = "$,.0r")),
             opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.7)),
             tooltip=[alt.Tooltip("Total:Q",title='Total Cost', format="$,.4r"), alt.Tooltip("Year",title='Year')]
         ).add_selection(
             brush
+        ).properties(
+        width=550,
+        title='Figure 1: Overview of supression costs from 1985 to 2019'
     )
 
     rule1 = alt.Chart(df_main).mark_rule(color='red').encode(
-                y='mean(Total):Q',
+                y='mean(cost_thousands):Q',
                 size=alt.SizeValue(3)
             ).transform_filter(
                 brush
     )
 
+
     bar2 = alt.Chart(df_main).mark_bar().encode(
-            x = alt.X('Year:O', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
-            y = alt.Y('Acres:Q', scale=alt.Scale(zero=False), title='Acres Burned', axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
+            x = alt.X('Year:O', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=18,labelFontSize=14)),
+            y = alt.Y('Acres:Q', scale=alt.Scale(zero=False), title='Acres Burned', axis=alt.Axis(titleFontSize=18,labelFontSize=14)),
             opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.7)),
             tooltip=[alt.Tooltip("Acres",title='Acres Burned', format=",.6r"), alt.Tooltip("Year",title='Year')]
         ).add_selection(
             brush
+        ).properties(
+        width=550,
+        title='Figure 7: Total acres burned per year from 1985 to 2019'
     )
 
     rule2 = alt.Chart(df_main).mark_rule(color='red').encode(
@@ -397,12 +408,15 @@ def sammys_viz():
     )
 
     bar3 = alt.Chart(df_main).mark_bar().encode(
-            x = alt.X('Year:O', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
-            y = alt.Y('Fires:Q', scale=alt.Scale(zero=False), title='Number of Fires', axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
+            x = alt.X('Year:O', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=18,labelFontSize=14)),
+            y = alt.Y('Fires:Q', scale=alt.Scale(zero=False), title='Number of Fires', axis=alt.Axis(titleFontSize=18,labelFontSize=14)),
             opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.7)),
             tooltip=[alt.Tooltip("Fires",title='Number of Fires', format=",.4r"),alt.Tooltip("Year",title='Year')]
         ).add_selection(
             brush
+        ).properties(
+        width=550,
+        title='Figure 8: Total number of fires per year from 1985 to 2019'
     )
 
     rule3 = alt.Chart(df_main).mark_rule(color='red').encode(
@@ -413,12 +427,15 @@ def sammys_viz():
     )
 
     bar4 = alt.Chart(df_main).mark_bar().encode(
-            x = alt.X('Year:O', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
-            y = alt.Y('cost_per_acre:Q', scale=alt.Scale(zero=False), title='Cost per Acre', axis=alt.Axis(titleFontSize=20,labelFontSize=14, format = "$,.2r")),
+            x = alt.X('Year:O', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=18,labelFontSize=14)),
+            y = alt.Y('cost_per_acre:Q', scale=alt.Scale(zero=False), title='Cost per Acre Burned', axis=alt.Axis(titleFontSize=18,labelFontSize=14, format = "$,.2r")),
             opacity=alt.condition(brush, alt.OpacityValue(1), alt.OpacityValue(0.7)),
-            tooltip=[alt.Tooltip("cost_per_acre",title='Cost per Acre', format="$,.2r"),alt.Tooltip("Year",title='Year')]
+            tooltip=[alt.Tooltip("cost_per_acre",title='Cost per Acre Burned', format="$,.2r"),alt.Tooltip("Year",title='Year')]
         ).add_selection(
             brush
+        ).properties(
+        width=550,
+        title='Figure 2: Cost per acre burned breakdown from 1985 to 2019'         
     )
 
     rule4 = alt.Chart(df_main).mark_rule(color='red').encode(
@@ -433,29 +450,109 @@ def sammys_viz():
     select_year1 = alt.selection_single(name="SelectorName", fields=['Year'],
                                         bind=slider1, init={'Year': 2006})
 
-    scatter = alt.Chart(df_sig).mark_circle(size=200
-            ).encode(
-                x=alt.X('Days:Q', title='Days of Fire',scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=20,labelFontSize=14)),
-                y=alt.Y('cost_per_acre:Q', title='Cost per Acre', scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=20,labelFontSize=14,format="$,.2r")),
-                color= alt.Color('Cause:N'),
-                tooltip=[alt.Tooltip('Name:N',title='Name of Fire'), alt.Tooltip('Acres:Q',title='Acres Burned'), alt.Tooltip('cost_per_acre:Q',title="Cost per Acre", format="$,.2r"),alt.Tooltip('Days:Q',title="Days of Fire")],
-                size=alt.Size("Acres:Q", title='Acres Burned',scale=alt.Scale(range=[0, 1000])),
-            ).properties(
-                width=800,
-                height=500
-            ).add_selection(
-                select_year1
-            ).transform_filter(
-                select_year1
-        )
+    brush1 = alt.selection(type='interval')
 
-    scatter
-    (bar1 + rule1) & (bar2 + rule2) & (bar3 + rule3) & (bar4 + rule4)
+    scatter = alt.Chart(df_sig).mark_circle(size=200
+    ).encode(
+        x=alt.X('Days:Q', title='Days of Fire',scale=alt.Scale(domain=(0,260)),axis=alt.Axis(titleFontSize=18,labelFontSize=14)),
+        y=alt.Y('cost_per_acre:Q', title='Cost per Acre Burned', scale=alt.Scale(domain=(0,2000)),axis=alt.Axis(titleFontSize=18,labelFontSize=14,format="$,.2r")),
+        color= alt.Color('Cause:N'),
+        tooltip=[alt.Tooltip('Name:N',title='Name of Fire'), alt.Tooltip('State:N'), alt.Tooltip('Acres:Q',title='Acres Burned'), alt.Tooltip('cost_per_acre:Q',title="Cost per Acre", format="$,.2r"),alt.Tooltip('Days:Q',title="Days of Fire")],
+        size=alt.Size("Acres:Q", title='Acres Burned',scale=alt.Scale(range=[0, 1000],domain=(0,300000))),
+    ).properties(
+        width=550,
+        height=400,
+        title='Figure 5: Cost per acre vs days of fire broken down by human vs natural cause and acreage burned'
+    ).transform_filter(
+       brush1
+    # ).add_selection(
+    #   select_year1
+    # ).transform_filter(
+    #   select_year1
+    ).interactive()
+
+    scatter1 = alt.Chart(df_sig).mark_circle(size=200
+    ).encode(
+        x=alt.X('State:N', title='State',scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=18,labelFontSize=14)),
+        y=alt.Y('cost_per_acre:Q', title='Cost per Acre',axis=alt.Axis(titleFontSize=18,labelFontSize=14,format="$,.2r")),
+        color= alt.Color('Cause:N'),
+        tooltip=[alt.Tooltip('Name:N',title='Name of Fire'), alt.Tooltip('State:N',title='State'), alt.Tooltip('Acres:Q',title='Acres Burned'), alt.Tooltip('cost_per_acre:Q',title="Cost per Acre", format="$,.2r"),alt.Tooltip('Days:Q',title="Days of Fire")],
+        size=alt.Size("Days:Q", title='Days Burned')
+    ).properties(
+        width=550,
+        height=400,
+        title='Figure 6: Cost per acre vs state broken down by human vs natural cause and days of fire'
+    ).add_selection(
+       brush1
+
+    #).interactive()
+    )
+    single = alt.selection_single(fields=['Cause'])
+
+    nat_human = alt.Chart(df_sig).mark_line(point=True).encode(
+                alt.X('Year:O',title='Year',scale=alt.Scale(zero=False),axis=alt.Axis(titleFontSize=18,labelFontSize=14)),
+                alt.Y('mean(cost_per_acre):Q',title='Cost per Acre Burned', scale=alt.Scale(zero=False), axis=alt.Axis(titleFontSize=18,labelFontSize=14, format='$,.3r')),
+                color='Cause:N',
+                tooltip=[alt.Tooltip("Year:O",title='Year'),alt.Tooltip("mean(cost_per_acre):Q",title='Cost per Acre Burned',format='$,.3r')]
+        ).properties(
+                width=800,
+                height=300,
+                title='Figure 3: Cost per Acre (cause breakdown)'
+
+    )
+
+    nat_human1 = alt.Chart(df_sig).mark_bar(
+        ).encode(
+            y=alt.Y('Cause:N',title='Cause',axis=alt.Axis(titleFontSize=18,labelFontSize=14)),
+            x=alt.X('mean(cost_per_acre):Q', title='Cost per Acre Burned', axis=alt.Axis(titleFontSize=18,labelFontSize=14, format='$,.3r')),
+            color='Cause:N',
+            tooltip=[alt.Tooltip("mean(cost_per_acre):Q",title='Cost per Acre Burned',format='$,.3r')]
+        ).properties(
+            title='Figure 4: 14 year average of cost per acre (cause breakdown)'
+
+    )
+    text1 = nat_human1.mark_text(
+            align='left',
+            baseline='middle',
+            dx=3  # Nudges text to right so it doesn't appear on top of the bar
+        ).encode(
+            text=alt.Text('mean(cost_per_acre):Q',format='$.3r')
+    )
+#        ).add_selection(
+#        select_year1
+#        ).transform_filter(
+#        select_year1
+
+    st.markdown('# Overview')
+    st.subheader('In this section we will explore and analyze the impact of wildfires in the United States from both an economic and an enviornmental perspective. We will also be breaking down human vs natural caused fires and identify the impacts of each. Finally we will discuss different fire protections and fire types.')
+    st.header('Impact on the Economy')
+    
+    (bar1 + rule1) | (bar4 + rule4)
+    st.subheader("You can select an interval on either graph to see the mean (red line) of a certain period of time and this will be reflected on the other chart as well. You can also hover over each bar to get the exact dollar ($) ammount per year.")
+    st.subheader("Over the years, the cost of suppressing wildfires has gone up significantly especially at the turn of the century. Looking at Figure 1 alone, we can assume that a significant increase in suppression cost per year is due to either one or both of rising operational costs or a rise in the size or amount of fires. Figure 2 gives us some insight into why we see such a sharp increase because it looks at the cost per acre, which keeps the 'size of fires' variable constant. We can infer that the operational costs have gone up for fire suppression. However, the increase in 'cost per acre' is not proportional to the increase in suppression costs, which leads us to believe the size or amount of fires plays a role in the increase of total suppression costs.") 
+    nat_human & (nat_human1 + text1)
+    
+    #st.write('Figure 2: Cost per Acre Burned Breakdown')
+    st.subheader("Hover over figue 3's data points to get the exact values for each year.")
+    st.subheader("When we look at the past 14 years significant fire information (Figure 2), cost to the US government to put down a fire cause by humans is $251 per acre which is 64% more than money spent to put down the fires caused by natural causes ($153). However, 85% of the total wildfires land was burned by natural causes.")
+    st.write()
+
+    st.write(alt.concat(scatter,scatter1).resolve_scale(size='independent'))
+    st.subheader("You can hover over the circles on Figure 5 and 6 to see more information about each fire. You can also zoom in and out of Figure 5. Finally, you have the option to select an interval on Figure 6, which will highlight those same points on Figure 5 to give you a better sense of the cost per acre relative to the days of fire for each state. ")
+    st.subheader("Although, there is no significant correlation between cost of acre burned and duration of fire, the illustration below demonstrates an interesting spread of significant fires across the state in past 14 years. From Figure 6 we can identify that California has a much higher cost per acre burned. We assume this is due to high operational costs in Calfiornia. On the flip slide we also noticed that Alaska despite having multiple large firest that burned for a high number of days, maintained a relatively low cost per acre, which is contrast to California. ")
+    st.header('Impact on the Enviornment')
+    (bar2 + rule2) | (bar3 + rule3)
+    st.subheader("You can select an interval on either graph to see the mean (red line) of a certain period of time and this will be reflected on the other chart as well. You can also hover over each bar to get the exact number of fires or acres burned per year.")
+    
+    chart_1 | chart_2
+    
     map_chart = background + fire_points
     map_chart
+    st.subheader("You can hover over each circle to get more details about each fire. You can also use the year slider to cycle through the years to see the differences from one year to another.")
+    st.subheader("Throughout the years, it is evident that fires have been more significant on the west coast rather than east coast. Natural caused fires seem to be larger than human caused ones, which fits with what we discussed earlier with 85% of land burned by natural caused fires. One other interesting observation is the presence of small human caused fires in the mid-west and east coast.")
     chart_3
-    chart_1
-    chart_2
+    st.subheader('The significant wildfires for human causes has been 415k acers on an average every year but the land burned due to natural causes has been 2.3m acres (5.5 times than the human causes).')
+
 
 @st.cache
 def dataloader():
