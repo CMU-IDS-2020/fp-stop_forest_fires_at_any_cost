@@ -59,6 +59,7 @@ def load2():
 def load3():
     df = pd.read_excel('Data.xlsx')
     df['cost_per_acre'] = df['Total']/df['Acres']
+    df['cost_thousands'] = df['Total']/1000000
     return df
 
 #Data processing for the Cost Predictor Model
