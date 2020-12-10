@@ -25,11 +25,11 @@ The application we built is organized into three main sections. The first sectio
 - [ ] All project members assisted in the production of project goals and direction, the narrative development, and the project report. 
 
 ### Application Screenshots
-![]https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/Intro.png
-![]https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/Exploration1.png
-![]https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/Exploration2.png
-![]https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/Exploration3.png
-![]https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/Exploration4.png
-![]https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/Predict1.png
-![]https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/predict2.png
+![](https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/Intro.png)
+![](https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/Exploration1.png)
+![](https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/Exploration2.png)
+![](https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/Exploration3.png)
+![](https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/Exploration4.png)
+![](https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/Predict1.png)
+![](https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/predict2.png)
 
