@@ -17,8 +17,9 @@ The application we built is organized into three main sections. The first sectio
 
 ### Work distribution
 
-- [ ] Arpit Kumar: Arpit scraped the data from various pdfs and gathered url links for each of the significant fires to add interest to the project. He also assisted in the production of project goals and direction, the narrative development, and the project report. 
+- [ ] Arpit Kumar: Arpit scraped the data from various pdfs and gathered url links for each of the significant fires to add interest to the project. 
 - [ ] Sammy Hajomar: Sammy was primarily responsible for the "Exploration" tab on the application. He designed the environmental impact and financial impact visualizations for further wildfire analysis. 
 - [ ] Joshua Vargas: Joshua was responsible for the Additional Analysis section of the "Exploration" tab. He provided added insight into fire type trends over time. 
 - [ ] Taylor Sullivan: Taylor was responsible for the "Introduction" tab and captivating the user to progress through the application.
 - [ ] Joshua and Taylor: Joshua and Taylor collaborated on the predictor model, completing their code in R Studio. They developed the "Predictions" tab of the application which projects user-caused and nature-caused acres burned and costs of suppression for five years out. This page also offers users the opportunity to interact with the predictions with their own inputs. 
+- [ ] All project members assisted in the production of project goals and direction, the narrative development, and the project report. 
