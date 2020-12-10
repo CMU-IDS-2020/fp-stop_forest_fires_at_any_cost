@@ -44,3 +44,13 @@ national_ets_fc_df %>% filter(Year == "2017") %>% select(Year, "Point_Forecast")
 
 #merge the data
 write.csv(national_ets_fc_df, 'natural_prediction_results.csv')
+
+#Model Evaluation
+national_ts <- ts(dataset$Acres, start=1980, end=2016, freq=1)
+national_model <- window(x = national_ts, start = c(1980))
+train <- window(national_model, end=2005)
+(fit.ets <- ets(train))
+a2 <- fit.ets %>% forecast(h = 2006) %>% accuracy(national_ts)
+a2[,c("RMSE", "MAE", "MAPE", "MASE")]
+national_ets_auto <- ets(national_model)
+national_ets_fc <- forecast(national_ets_auto, h=5)
