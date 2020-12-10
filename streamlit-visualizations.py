@@ -547,7 +547,7 @@ def showCountForest(reforest):
     if reforest == 0: 
         i2 = .158
     else: 
-        i2 = ((((5000000 + reforest)/365)/24)/60)/60
+        i2 = ((((5000000 + reforest*1000000)/365)/24)/60)/60
     for number in range(1, 10000000):
         count1 += i
         count2 += i2
