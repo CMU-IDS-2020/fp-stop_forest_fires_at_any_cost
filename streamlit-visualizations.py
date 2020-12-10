@@ -272,7 +272,7 @@ def predictCost(predict3, predict4, flag, num):
 
 def render_predictions():
     st.title('Decrease the Impact')
-    st.markdown("Use the inputs below to determine prediction")
+    st.subheader("Use the inputs below to determine prediction")
     human_input = st.text_input('Enter a number between 0 and 100 to decrease Human Impact:')
     fire_input = st.text_input('Enter a number between 0 and 100 to decrease Natural Impact:')
     if human_input == '':
@@ -682,8 +682,10 @@ if __name__ == "__main__":
         else:
             year = render_slider(1980)
             causePlots(year)
-        countLoc = st.empty()
-        showCount4()
+        st.subheader('While we may assign a budget to suppress wildfires more quickly, these actions alone will not reduce the negative effects of wildfires on our climate. Below are the Acres-Burned and Reforestation Clocks. Right now, the reforestation clock is running behind, but all of us together can speed it up.')
+        reforestLoc = st.empty()
+        reforest = reforestationInputs()
+        showCountForest(reforest)
     elif(add_selectbox == 'Exploration'):
         sammys_viz()
         other_viz3(result)
@@ -709,8 +711,4 @@ if __name__ == "__main__":
         predictPlot(predict3, predict4, flag, num)
         predictCost(predict3, predict4, flag, num)
         display_pred_code()
-        st.subheader('While we may assign a budget to suppress wildfires more quickly, these actions alone will not reduce the negative effects of wildfires on our climate. Below are the Acres-Burned and Reforestation Clocks. Right now, the reforestation clock is running behind, but all of us together can speed it up.')
-        reforestLoc = st.empty()
-        reforest = reforestationInputs()
-        showCountForest(reforest)
    
