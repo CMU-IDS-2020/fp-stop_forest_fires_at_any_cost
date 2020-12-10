@@ -239,7 +239,7 @@ def predictPlot(predict3, predict4, flag, num):
     file_.close()
     num = 700 - 700*num
     col2.markdown(f'<img src="data:image/gif;base64,{data_url}" width="{num}" height="{num}" alt="fire gif">', unsafe_allow_html=True)
-    col2.markdown('<b> Watch the fire proportionally decrease by your human-caused fire input </b>', unsafe_allow_html=True)
+    col2.write('Watch the fire proportionally decrease by your human-caused fire input')
 
 def predictCost(predict3, predict4, flag, num):
     col21, col22 = location2.beta_columns((2,1))
@@ -263,7 +263,7 @@ def predictCost(predict3, predict4, flag, num):
     file_.close()
     num = 700 - 700*num
     col22.markdown(f'<img src="data:image/gif;base64,{data_url}" width="{num}" height="{num}" alt="fire gif">', unsafe_allow_html=True,)
-    col22.markdown('<b> Watch the money proportionally decrease by your human-caused fire input </b>', unsafe_allow_html=True)
+    col22.write('Watch the money proportionally decrease by your human-caused fire input')
 
 def render_predictions():
     st.title('Decrease the Impact')
