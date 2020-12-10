@@ -147,11 +147,14 @@ def human_v_natural():
     st.subheader('1.4 Summary')
     st.write('Summary of findings')
 
-def other_viz3():
-    result = get_bigData_cause(df5)
+@st.cache
+def load5():
+    df5 = pd.read_csv('predict_raw.csv')
+    return df5
 
-    types = ['Action Fires/Supressed Fires', 'Natural Out', 'Support Action/Assist Fire', 'Fire Management/Perscribed', 'False Alarm', 'Severe']
-
+result = load5()
+def other_viz3(result):
+    
     firetype_df2 = result.groupby(['YEAR_','FIRETYPE']).size().reset_index(name="Firetype Count")
     firetype_df2['FIRETYPE'] = firetype_df2['FIRETYPE'].replace(0, 'Action Fires/Supressed Fires')
     firetype_df2['FIRETYPE'] = firetype_df2['FIRETYPE'].replace(1, 'Natural Out')
@@ -159,26 +162,24 @@ def other_viz3():
     firetype_df2['FIRETYPE'] = firetype_df2['FIRETYPE'].replace(3, 'Fire Management/Perscribed')
     firetype_df2['FIRETYPE'] = firetype_df2['FIRETYPE'].replace(4, 'False Alarm')
     firetype_df2['FIRETYPE'] = firetype_df2['FIRETYPE'].replace(5, 'Severe')
-    
-    base = alt.Chart(firetype_df2, width=600, height=600).mark_point(filled=True).encode(
-    x=alt.X('YEAR_:N', axis=alt.Axis(labelAngle=45), title = 'Year'),
+
+    acreage =  result.groupby(['YEAR_','FIRETYPE'])['TOTALACRES'].sum().reset_index(name="Firetype Acres")
+    acreage['YEAR_'] = acreage['YEAR_'].astype(str)
+    acreage['FIRETYPE'] = acreage['FIRETYPE']
+
+    selection = alt.selection_multi(fields=['FIRETYPE'], bind='legend')
+     
+    base = alt.Chart(firetype_df2).mark_point(filled=True).encode(
+    x=alt.X('YEAR_:N', axis=alt.Axis(labelAngle=360, values = [1980,1985,1990, 1995, 2000, 2005, 2010, 2016]), title = 'Year'),
     y='Firetype Count:Q',
-    tooltip="FIRETYPE:N"
-    )
+    color=alt.Color('FIRETYPE:N', scale=alt.Scale(scheme='category20b')),
+    tooltip=["FIRETYPE:N", 'YEAR_:N'],
+    opacity=alt.condition(selection, alt.value(1), alt.value(0.2))
+    ).add_selection(selection).properties(width=700, height=400, title='Figure 13: National wildfires count by type')
 
-    type_radio = alt.binding_radio(options=types)
-    type_select = alt.selection_single(fields=['FIRETYPE'], bind=type_radio, name='Pick a')
-    type_color_condition = alt.condition(type_select,
-                      alt.Color('FIRETYPE:N', legend=None),
-                      alt.value('lightgray'))
-    highlight_types = base.add_selection(
-    type_select
-    ).encode(
-    color=type_color_condition
-    ).properties(title="Fill In")
-
-    highlight_types
-
+    base
+    st.subheader('Inspite the groups focus on Human and Natural causes of fires, the illustration above illustrates the different fire types, their count, and trend for the past 37 years. Natural out and action fires have been the most dominant in terms of count of fires. The primary insight for this chart is to better understand how monetary resources could best be utilized. Information gathered from governmental budget requests, suggests that fund allocations and distribuitions is determined by the most recent 3 year observations. Additionally, it is also influenced by the current fiscal year lines of efforts. The intent of this graph is to understand trends in order to aid the decision making process for budget distribution.')
+    st.subheader('In recent years the western states have began to adjust their strategic plans for combating wildfires. Past initiatives primarily focused on positioning states to have a reactive posture to wildfires since it is a seasonal occurrence. The residual effect was that major portions of the fiscal year budget (approx. 50% land management budget) was allocated for personnel and equipment. In California’s 2020-21 budget proposal, it was stated that the wildfire threat has been enhanced by the inability to maintain public lands and the population growth outpacing the state’s ability to emplace proper infrastructure. The proposal highlights enduring initiatives that shifts the states focus to emplace proactive counter measures.')
 
 def display_pred_code():
     #big data acrage predictor
@@ -682,7 +683,7 @@ if __name__ == "__main__":
         showCount4()
     elif(add_selectbox == 'Exploration'):
         sammys_viz()
-        other_viz3()
+        other_viz3(result)
 
     elif(add_selectbox == 'Predictions'):
         st.title('Time Series Forecasting: Future Acres Burned and Furure Cost of Suppression')
