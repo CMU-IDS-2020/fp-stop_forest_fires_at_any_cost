@@ -577,7 +577,7 @@ def causePlots(x):
     natural = df[df['Cause'] == 'Natural']
    
     if human['BurnTime'].iloc[0] == 0 and natural['BurnTime'].iloc[0] == 0: 
-        col2.markdown('Both human-caused and nature-caused fires average 0 days for this year')
+        col2.subheader('Both human-caused and nature-caused fires average 0 days for this year')
     else: 
         fig = px.pie(df, values='BurnTime', names='Cause', title=f'Burn Days per Fire in {x}', color='Cause', color_discrete_map={'Human':'red', 'Natural':'blue'})
         fig.update_layout(width=375,height=275)
@@ -589,7 +589,7 @@ def causePlots(x):
         col2.plotly_chart(fig2, width=375,height=275)
 
         col3.title('Understanding Fire Trends by Cause')
-        col3.markdown('View the side-by-side comparison of human-caused and naturally-caused fires from the years 1985 - 2019. Observe the changes in number of fires (seen on the map) versus burn days and acres burned. Consider the fact that the greater amount of burn days increase the length of time resources are expended to suppress a fire. Also consider that, as acres-burned grows, the ability of fire fighters to supppress a fire lessens.')
+        col3.subheader('View the side-by-side comparison of human-caused and naturally-caused fires from the years 1985 - 2019. Observe the changes in number of fires (seen on the map) versus burn days and acres burned. Consider the fact that the greater amount of burn days increase the length of time resources are expended to suppress a fire. Also consider that, as acres-burned grows, the ability of fire fighters to supppress a fire lessens.')
 
 def render_slider(year):
     key = random.random() if animation_speed else None
@@ -599,10 +599,10 @@ def render_slider(year):
 def showCount3(counter1, counter2):
     col1, col2 = countLoc.beta_columns(2)
     col1.title('Acres Burned Clock')
-    col1.markdown('Watch the clock as wildfires to see the rate of acres of land burned per second across the US')
+    col1.subheader('Watch the clock as wildfires to see the rate of acres of land burned per second across the US')
     col1.title(f'{counter1}')
     col2.title('Reforestation Clock')
-    col2.markdown('Watch the clock as humans attempt to reforest per second across the US')
+    col2.subheader('Watch the clock as humans attempt to reforest per second across the US')
     col2.title(f'{counter2}')
     
 def showCount4(): 
@@ -619,7 +619,7 @@ def showCount4():
 
 def reforestationInputs(): 
     st.title('Change your Impact')
-    st.markdown("Use the inputs below to catch deforestation rates with increased reforestation efforts")
+    st.subheader("Use the inputs below to catch deforestation rates with increased reforestation efforts")
     human_input = st.text_input('Enter a number to increase millions of acres reforested per year:')
     if human_input == '':
         human_input = 0
@@ -632,10 +632,10 @@ def reforestationInputs():
 def displayForest(count1, count2):
     col1, col2 = reforestLoc.beta_columns(2)
     col1.title('Acres Burned Clock')
-    col1.markdown('Watch the clock as wildfires to see the rate of acres of land burned per second across the US')
+    col1.subheader('Watch the clock as wildfires to see the rate of acres of land burned per second across the US')
     col1.title(f'{count1}')
     col2.title('Reforestation Clock')
-    col2.markdown('Watch the clock as humans attempt to reforest per second across the US')
+    col2.subheader('Watch the clock as humans attempt to reforest per second across the US')
     col2.title(f'{count2}')
 
 def showCountForest(reforest): 
@@ -686,8 +686,8 @@ if __name__ == "__main__":
 
     elif(add_selectbox == 'Predictions'):
         st.title('Time Series Forecasting: Future Acres Burned and Furure Cost of Suppression')
-        st.write('Below you can see the forecasting results of a time series analysis on acres burned from both naturally-caused and human-caused fires. Our model projects five years out from the conclusion of the dataset. Evidently, fires are on the rise. Perhaps shockingly, fires caused by humans are not comparable to those caused by nature. This is likely due to climate change inciting longer dry spells and increasing the length of time for which our nation is at risk for wild fires. As the nation looks into the future, we need to prepare for these rising fire-counts, as well as their subsequent suppression costs. Based on these metrics, we must start to consider what kind of influence we can have on these predictions. Was Smokey Bear right? Are we the only ones who can prevent wildfires?')
-        st.write('Inspired by this mantra, explore the predictor model below to investigate for yourself. If we were able to reduce human-caused fires by 30% how many acres would still burn? How much would it cost? ')
+        st.subheader('Below you can see the forecasting results of a time series analysis on acres burned from both naturally-caused and human-caused fires. Our model projects five years out from the conclusion of the dataset. Evidently, fires are on the rise. Perhaps shockingly, fires caused by humans are not comparable to those caused by nature. This is likely due to climate change inciting longer dry spells and increasing the length of time for which our nation is at risk for wild fires. As the nation looks into the future, we need to prepare for these rising fire-counts, as well as their subsequent suppression costs. Based on these metrics, we must start to consider what kind of influence we can have on these predictions. Was Smokey Bear right? Are we the only ones who can prevent wildfires?')
+        st.subheader('Inspired by this mantra, explore the predictor model below to investigate for yourself. If we were able to reduce human-caused fires by 30% how many acres would still burn? How much would it cost? ')
         human, natural = render_predictions()
         st.title('Human vs. Natural Fire Predictions')
         other = st.empty()
@@ -705,7 +705,7 @@ if __name__ == "__main__":
         predictPlot(predict3, predict4, flag, num)
         predictCost(predict3, predict4, flag, num)
         display_pred_code()
-        st.write('While we may assign a budget to suppress wildfires more quickly, these actions alone will not reduce the negative effects of wildfires on our climate. Below are the Acres-Burned and Reforestation Clocks. Right now, the reforestation clock is running behind, but all of us together can speed it up.')
+        st.subheader('While we may assign a budget to suppress wildfires more quickly, these actions alone will not reduce the negative effects of wildfires on our climate. Below are the Acres-Burned and Reforestation Clocks. Right now, the reforestation clock is running behind, but all of us together can speed it up.')
         reforestLoc = st.empty()
         reforest = reforestationInputs()
         showCountForest(reforest)
