@@ -591,9 +591,9 @@ if __name__ == "__main__":
         st.write('Below you can see the forecasting results of a time series analysis on acres burned from both naturally-caused and human-caused fires. Our model projects five years out from the conclusion of the dataset. Evidently, fires are on the rise. Perhaps shockingly, fires caused by humans are not comparable to those caused by nature. This is likely due to climate change inciting longer dry spells and increasing the length of time for which our nation is at risk for wild fires. As the nation looks into the future, we need to prepare for these rising fire-counts, as well as their subsequent suppression costs. Based on these metrics, we must start to consider what kind of influence we can have on these predictions. Was Smokey Bear right? Are we the only ones who can prevent wildfires?')
         st.write('Inspired by this mantra, explore the predictor model below to investigate for yourself. If we were able to reduce human-caused fires by 30% how many acres would still burn? How much would it cost? ')
         st.title('Human vs. Natural Fire Predictions')
+	human, natural = render_predictions()
         other = st.empty()
         area51 = st.empty()
-        human, natural = render_predictions()
         st.title('Human vs. Natural Cost Predictions')
         location2 = st.empty()
         if human == 0 and natural == 0:
