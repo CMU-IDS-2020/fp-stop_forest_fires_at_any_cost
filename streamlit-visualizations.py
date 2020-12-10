@@ -178,7 +178,8 @@ def other_viz3(result):
     tooltip=["FIRETYPE:N", 'YEAR_:N'],
     opacity=alt.condition(selection, alt.value(1), alt.value(0.2))
     ).add_selection(selection).properties(width=700, height=400, title='Figure 13: National wildfires count by type')
-
+	
+    st.header('Supporting Exploration')
     base
     st.subheader('Inspite the groups focus on Human and Natural causes of fires, the illustration above illustrates the different fire types, their count, and trend for the past 37 years. Natural out and action fires have been the most dominant in terms of count of fires. The primary insight for this chart is to better understand how monetary resources could best be utilized. Information gathered from governmental budget requests, suggests that fund allocations and distribuitions is determined by the most recent 3 year observations. Additionally, it is also influenced by the current fiscal year lines of efforts. The intent of this graph is to understand trends in order to aid the decision making process for budget distribution.')
     st.subheader('In recent years the western states have began to adjust their strategic plans for combating wildfires. Past initiatives primarily focused on positioning states to have a reactive posture to wildfires since it is a seasonal occurrence. The residual effect was that major portions of the fiscal year budget (approx. 50% land management budget) was allocated for personnel and equipment. In California’s 2020-21 budget proposal, it was stated that the wildfire threat has been enhanced by the inability to maintain public lands and the population growth outpacing the state’s ability to emplace proper infrastructure. The proposal highlights enduring initiatives that shifts the states focus to emplace proactive counter measures.')
