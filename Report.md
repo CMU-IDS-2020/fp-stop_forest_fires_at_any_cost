@@ -73,6 +73,10 @@ The application we built is organized into three main sections. The first sectio
 
 ## Future Work
 
+Extending the applicability of the cost prediction could be best applied to land management budget trends and the allocation of funds. A case study conducted on human-caused wildfires in Spain highlights the direct relationship between socioeconomic trends and wildfires. The vast increase in population and gentrification of rural areas post WWII has had an impact on the severity and regularity of wildfires. A similar trend has been observed when evaluating the recent wildfires the state of California is experiencing. As briefly mentioned above, at-risk states’ strategic focus has been to shift from a reactive response to a proactive preventative approach. The model could best be served by addressing the necessary budget required to combat yearly significant fires and to aid in determining the operational cost for land management. 
+
+As our model currently stands, it does not include monthly predictions to account for the dry seasons associated with wildfires. Adding this functionality would drastically improve the accuracy of our model and offer even more insight into the monthly trends in wildfires. The parsing together of two datasets for this project was a major constraint, and further research should be conducted into the associated costs of fires and the development of more accurate data. Expanding the model from a singular variable forecasting model to a multi variable model could greatly improve the accuracy. Additionally, this model could be better improved through the adaption of a hybrid approach. Implementing a variety of machine learning algorithms has been proven to increase the accuracy of irregular data trends. Because wildfire data is sparse and irregular, providing methods that are both supervised and unsupervised could offer an avenue to more insightful and accurate forecasting.
+
 ## References
 1. Total fire count and area from 1926 to 2019: https://www.nifc.gov/fireInfo/fireInfo_stats_totalFires.html
 2. Federal firefighting costs from 1985 to 2019: https://www.nifc.gov/fireInfo/fireInfo_documents/SuppCosts.pdf
