@@ -90,4 +90,6 @@ As our model currently stands, it does not include monthly predictions to accoun
 10. Impact of wildfire on the environment: https://www.nationalforests.org/blog/our-impact-in-2019
 11. Model Evaluation: https://otexts.com/fpp2/arima-ets.html
 12. Case Study Comparison: http://bs.ustc.edu.cn/bairc/files/links/2014010331964313.pdf
+13. Multitemporal Modelling of Socio-Economic Wildfire Drivers in Central Spain between the 1980s and the 2000s: Comparing Generalized Linear Models to Machine Learning Algorithms: https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0161344
+14. An insight into machine-learning algorithms to model human-caused wildfire occurrence: https://www.sciencedirect.com/science/article/pii/S1364815214000814?casa_token=E_L390u4cK8AAAAA:i7eeudPw0R-a6V3tB40kjtFZSStmX7FTa0ULF4Qn1hK6hFs7DHhameOaimhHlICpjXJmXH3GodY
 
