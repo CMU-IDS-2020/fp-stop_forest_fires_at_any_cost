@@ -1,9 +1,10 @@
 # Final Project Report
 Joshua Vargas | Taylor Sullivan | Sammy Hajomar | Arpit Kumar
 
-**Project URL**: TODO
+**Project URL**: https://share.streamlit.io/cmu-ids-2020/fp-stop_forest_fires_at_any_cost/main/streamlit-visualizations.py
 
-Short (~250 words) abstract of the concrete data science problem and how the solutions addresses the problem.
+## Abstract
+
 
 ## Introduction
 Our project goal is to analyze the impact of forest fires on the United States' economy and environment and sensitize the audience to the impact we can have by reducing the burn days on the economy and the environment. 
@@ -52,7 +53,7 @@ Our model displays predictions that indicate future rises in both human-caused a
 
 ## Discussion
 
-### Evaluation
+### Model Evaluation
 
 We chose to evaluate our predictor model using a train-validate split to analyze the mean squared error, mean absolute percentage error, the root of the mean squared error to determine how well the model generalized to new data. The results demonstrated that the model did generalize well and was selected as our final model choice. 
 
