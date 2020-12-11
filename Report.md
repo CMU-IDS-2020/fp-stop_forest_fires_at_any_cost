@@ -67,8 +67,7 @@ In predicting the total area damaged by wildfires (measured in acreage), the for
 Additionally, due to the lack of data, we needed to use the suppression costs of 2019 in the Significant Fires Dataset from NIFC to estimate the corresponding costs of the predicted fires’ suppression costs for our forecasted results. Because of this cross-dataset approach, users should be cautious with the results, and further work is required to draw meaningful conclusions. 
 
 ### System overview and application
-
-![](https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/RMSE.png)
+<img style="float: right;" src="https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/RMSE.png">
 The application we built is organized into three main sections. The first section contains an introduction designed to captivate the user. This section consists of an animation of human-caused and nature-caused fires over 37 years with illuminating pie charts that depict the proportion of acres-burned and burn-days caused by humans and nature. Below the animation, the user can also manually progress through the time-series at their own pace with a slider. The introduction concludes with an acres-burned clock and reforestation clock for 2020, demonstrating the estimated acres-burned and reforestation efforts so far this year, as well as the rate of both of these processes each second. The user can attempt to “catch-up” to wild-fire deforestation with an input that calculates the reforestation efforts increased by that user input (in millions of acres). The exploration section leads the user through an exploratory data analysis of the environmental and financial impact of wildfires and the added analysis of fire types. The final section displays a predictor model for future acres-burned and suppression costs for the next five years. The user can decrease the fires created by both humans and nature to change the prediction outcomes. 
 
 ## Future Work
