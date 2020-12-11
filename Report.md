@@ -26,6 +26,7 @@ We looked at several data sources and chose sources with the highest credibility
 
 The prediction models utilized two different datasets, the dataset used for predicting cost (Significant Fires 2005-2019) was the most incomplete in supporting accuracy. The dataset illustrated the cost incurred from suppressing significant fires, which lent to missing data points for years not represented in the dataset and for fires that were not categorized as significant. The method for addressing the missing values was a k-nearest neighbor (knn) evaluating the three closest neighbors. The imputation method was applied at the state level for assessing future costs. After this, the dataset average cost per acre burned was calculated. At this point, we used the average cost per acre burned alongside the forecasting results from our Acres-Burned ETS Model to calculate an estimate of suppression costs. The Acres-Burned ETS Model uses the Federal Wildland Fire Occurrence Dataset, a limitation listed later in our research. 
 
+**Logis & Reasoning**
 The imputation method intended to account for state budgeting trends. In analyzing budget proposals for state land management, the requested budgets were developed by analyzing the previous three years’ trends, which supported the group's decision to utilize the three nearest neighbors.
 
 ### Streamlit Visualizations
