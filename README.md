@@ -1,6 +1,7 @@
 # CMU Interactive Data Science Final Project
 
 * **Online URL**: https://share.streamlit.io/cmu-ids-2020/fp-stop_forest_fires_at_any_cost/main/streamlit-visualizations.py
+* **Report URL**: https://github.com/CMU-IDS-2020/fp-stop_forest_fires_at_any_cost/blob/main/Report.md
 * **Team members**:
   * Contact person: tsulliva@andrew.cmu.edu, Taylor Sullivan
   * arpitk@andrew.cmu.edu, Arpit Kumar
