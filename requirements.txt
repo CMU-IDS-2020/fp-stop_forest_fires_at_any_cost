@@ -7,4 +7,4 @@ vega
 plotly
 altair_viewer
 vega_datasets
-xlrd
+xlrd==1.2.0
